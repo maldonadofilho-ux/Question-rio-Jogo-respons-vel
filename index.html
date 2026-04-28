@@ -1,0 +1,1599 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jogo Responsável – ULTRA BET</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #F5C842;
+    --gold-dim: #c9a22e;
+    --dark: #0A0A0F;
+    --dark2: #12121A;
+    --dark3: #1C1C28;
+    --dark4: #252535;
+    --text: #E8E8F0;
+    --text-dim: #8888AA;
+    --green: #2ECC71;
+    --red: #EF4444;
+    --orange: #F97316;
+    --yellow: #EAB308;
+    --border: rgba(245,200,66,0.18);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(245,200,66,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 100% 100%, rgba(245,200,66,0.04) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+    animation: fadeDown 0.7s ease both;
+  }
+
+  .logo-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    padding: 8px 20px;
+    margin-bottom: 28px;
+  }
+
+  .logo-badge .dot {
+    width: 8px; height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--gold);
+    animation: pulse 2s infinite;
+  }
+
+  .logo-badge span {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #fff 0%, var(--gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .intro-text {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--text-dim);
+    max-width: 560px;
+    margin: 0 auto 24px;
+  }
+
+  /* ── NAV TABS ── */
+  .nav-tabs {
+    display: flex;
+    gap: 4px;
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    padding: 4px;
+    margin-bottom: 36px;
+    animation: fadeDown 0.7s 0.05s ease both;
+  }
+
+  .nav-tab {
+    flex: 1;
+    padding: 10px 16px;
+    border-radius: 46px;
+    border: none;
+    background: transparent;
+    color: var(--text-dim);
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+
+  .nav-tab.active {
+    background: var(--gold);
+    color: var(--dark);
+  }
+
+  .nav-tab:hover:not(.active) {
+    color: var(--gold);
+  }
+
+  /* ── PROGRESS ── */
+  .progress-wrap {
+    margin-bottom: 36px;
+    animation: fadeDown 0.7s 0.1s ease both;
+  }
+
+  .progress-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+
+  .progress-info strong { color: var(--gold); font-family: 'Syne', sans-serif; }
+
+  .progress-bar {
+    height: 4px;
+    background: var(--dark4);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold-dim), var(--gold));
+    border-radius: 99px;
+    transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+    width: 0%;
+  }
+
+  /* ── PRIVACY BOX ── */
+  .privacy-box {
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 24px;
+    margin-bottom: 36px;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--text-dim);
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .privacy-box .privacy-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+
+  /* ── QUESTION CARD ── */
+  .question-card {
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px 28px 24px;
+    margin-bottom: 20px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .question-card:hover {
+    border-color: rgba(245,200,66,0.35);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+
+  .question-card.answered { border-color: rgba(245,200,66,0.4); }
+
+  .q-number {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+
+  .q-text {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--text);
+    margin-bottom: 18px;
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .option {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 13px 18px;
+    background: var(--dark3);
+    border: 1.5px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+  }
+
+  .option:hover {
+    background: var(--dark4);
+    border-color: rgba(245,200,66,0.3);
+    transform: translateX(3px);
+  }
+
+  .option.selected {
+    background: rgba(245,200,66,0.08);
+    border-color: var(--gold);
+  }
+
+  .option.selected .radio-circle {
+    background: var(--gold);
+    border-color: var(--gold);
+    box-shadow: 0 0 10px rgba(245,200,66,0.5);
+  }
+
+  .option.selected .radio-circle::after { opacity: 1; transform: scale(1); }
+  .option.selected .option-label { color: var(--text); }
+
+  .radio-circle {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.2);
+    flex-shrink: 0;
+    position: relative;
+    transition: all 0.2s;
+  }
+
+  .radio-circle::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    background: var(--dark);
+    border-radius: 50%;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.2s;
+  }
+
+  .option-label {
+    font-size: 14px;
+    color: var(--text-dim);
+    transition: color 0.2s;
+  }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 32px 0 24px;
+    opacity: 0.4;
+  }
+
+  .section-divider::before,
+  .section-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .section-divider span {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-family: 'Syne', sans-serif;
+  }
+
+  /* ── SUBMIT ── */
+  .submit-wrap { margin-top: 36px; text-align: center; }
+
+  .submit-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--gold);
+    color: var(--dark);
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    letter-spacing: 1px;
+    padding: 16px 48px;
+    border-radius: 99px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-transform: uppercase;
+  }
+
+  .submit-btn:hover {
+    background: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(245,200,66,0.35);
+  }
+
+  .submit-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  .submit-note {
+    margin-top: 14px;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  .form-wrap { transition: opacity 0.3s; }
+  /* FORM_VIEW / RESULT_VIEW controlled via JS display */
+
+  .result-screen {
+    display: none;
+    animation: fadeUp 0.6s ease both;
+  }
+  .result-screen.visible { display: block; }
+
+  .result-header {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+
+  .risk-badge-large {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 28px;
+    border-radius: 99px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 16px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .risk-badge-large.low    { background: rgba(46,204,113,0.12); border: 2px solid rgba(46,204,113,0.5); color: var(--green); }
+  .risk-badge-large.mod    { background: rgba(234,179,8,0.12);  border: 2px solid rgba(234,179,8,0.5);  color: var(--yellow); }
+  .risk-badge-large.high   { background: rgba(249,115,22,0.12); border: 2px solid rgba(249,115,22,0.5); color: var(--orange); }
+  .risk-badge-large.crit   { background: rgba(239,68,68,0.12);  border: 2px solid rgba(239,68,68,0.5);  color: var(--red); }
+
+  .score-display {
+    margin-bottom: 12px;
+  }
+
+  .score-big {
+    font-family: 'Syne', sans-serif;
+    font-size: 72px;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  .score-max {
+    font-size: 22px;
+    color: var(--text-dim);
+    font-family: 'Syne', sans-serif;
+  }
+
+  .score-bar-wrap {
+    max-width: 400px;
+    margin: 20px auto 0;
+  }
+
+  .score-bar-track {
+    height: 8px;
+    background: var(--dark4);
+    border-radius: 99px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .score-bar-fill {
+    height: 100%;
+    border-radius: 99px;
+    transition: width 1s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  .score-bar-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+    font-family: 'Syne', sans-serif;
+  }
+
+  /* ── RESULT SECTIONS ── */
+  .result-card {
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px;
+    margin-bottom: 20px;
+  }
+
+  .result-card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .interpretation-text {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--text-dim);
+  }
+
+  .recs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .rec-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 18px;
+    border-radius: 14px;
+    border: 1px solid;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .rec-item.low    { background: rgba(46,204,113,0.05);  border-color: rgba(46,204,113,0.2);  color: #b0f0cc; }
+  .rec-item.mod    { background: rgba(234,179,8,0.05);   border-color: rgba(234,179,8,0.2);   color: #f5e08a; }
+  .rec-item.high   { background: rgba(249,115,22,0.05);  border-color: rgba(249,115,22,0.2);  color: #fbd0a8; }
+  .rec-item.crit   { background: rgba(239,68,68,0.05);   border-color: rgba(239,68,68,0.2);   color: #fca5a5; }
+
+  .rec-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+  .answers-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .answer-chip {
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 12px;
+  }
+
+  .answer-chip-q {
+    color: var(--text-dim);
+    margin-bottom: 4px;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+  }
+
+  .answer-chip-v {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+  }
+
+  .answer-chip-v.s0 { color: var(--green); }
+  .answer-chip-v.s1 { color: var(--yellow); }
+  .answer-chip-v.s2 { color: var(--orange); }
+  .answer-chip-v.s3 { color: var(--red); }
+
+  .new-eval-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: 1.5px solid var(--border);
+    color: var(--text-dim);
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 12px 28px;
+    border-radius: 99px;
+    cursor: pointer;
+    transition: all 0.25s;
+    text-transform: uppercase;
+    margin-top: 32px;
+  }
+
+  .new-eval-btn:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    transform: translateY(-1px);
+  }
+
+  /* ── HISTORY SCREEN ── */
+  .history-screen {
+    display: none;
+    animation: fadeUp 0.5s ease both;
+  }
+  .history-screen.visible { display: block; }
+
+  .history-empty {
+    text-align: center;
+    padding: 80px 20px;
+    color: var(--text-dim);
+  }
+
+  .history-empty-icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+    opacity: 0.3;
+  }
+
+  .history-empty-text {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text-dim);
+  }
+
+  .history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .history-item {
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 24px;
+    display: grid;
+    grid-template-columns: 1fr auto auto auto;
+    gap: 16px;
+    align-items: center;
+    transition: border-color 0.2s;
+    cursor: pointer;
+  }
+
+  .history-item:hover {
+    border-color: rgba(245,200,66,0.3);
+  }
+
+  .history-item-date {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-bottom: 4px;
+    font-family: 'Syne', sans-serif;
+    letter-spacing: 0.5px;
+  }
+
+  .history-item-id {
+    font-size: 10px;
+    color: var(--text-dim);
+    opacity: 0.5;
+    font-family: monospace;
+  }
+
+  .history-score {
+    text-align: center;
+  }
+
+  .history-score-num {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 24px;
+  }
+
+  .history-score-label {
+    font-size: 9px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .risk-badge-sm {
+    padding: 5px 12px;
+    border-radius: 99px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  .risk-badge-sm.low  { background: rgba(46,204,113,0.1); color: var(--green); border: 1px solid rgba(46,204,113,0.3); }
+  .risk-badge-sm.mod  { background: rgba(234,179,8,0.1);  color: var(--yellow); border: 1px solid rgba(234,179,8,0.3); }
+  .risk-badge-sm.high { background: rgba(249,115,22,0.1); color: var(--orange); border: 1px solid rgba(249,115,22,0.3); }
+  .risk-badge-sm.crit { background: rgba(239,68,68,0.1);  color: var(--red);    border: 1px solid rgba(239,68,68,0.3); }
+
+  .history-chevron {
+    color: var(--text-dim);
+    font-size: 14px;
+    opacity: 0.5;
+  }
+
+  .history-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+
+  .history-stat {
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    text-align: center;
+  }
+
+  .history-stat-val {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+
+  .history-stat-lbl {
+    font-size: 10px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .clear-history-btn {
+    background: transparent;
+    border: 1px solid rgba(239,68,68,0.25);
+    color: rgba(239,68,68,0.6);
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 8px 18px;
+    border-radius: 99px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    float: right;
+    margin-bottom: 20px;
+  }
+
+  .clear-history-btn:hover {
+    border-color: var(--red);
+    color: var(--red);
+  }
+
+  /* ── MODAL (history detail) ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    backdrop-filter: blur(4px);
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal-box {
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 32px;
+    max-width: 560px;
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+    animation: fadeUp 0.3s ease both;
+  }
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 24px;
+  }
+
+  .modal-close {
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    cursor: pointer;
+    font-size: 22px;
+    line-height: 1;
+    padding: 0 0 0 12px;
+    transition: color 0.2s;
+  }
+
+  .modal-close:hover { color: var(--text); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.4; }
+  }
+
+  @keyframes scoreCount {
+    from { opacity: 0; transform: scale(0.5); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  /* ── SUS REFERRAL BLOCK ── */
+  .sus-block {
+    background: rgba(239,68,68,0.04);
+    border: 1.5px solid rgba(239,68,68,0.25);
+    border-radius: 20px;
+    padding: 28px;
+    margin-bottom: 20px;
+  }
+
+  .sus-block-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #EF4444;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .sus-block-text {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+  }
+
+  .sus-links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .sus-link-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 16px;
+    background: rgba(239,68,68,0.06);
+    border: 1px solid rgba(239,68,68,0.15);
+    border-radius: 12px;
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  .sus-link-item a {
+    color: #fca5a5;
+    text-decoration: none;
+    word-break: break-all;
+  }
+
+  .sus-link-item a:hover { text-decoration: underline; }
+
+  .sus-footer-note {
+    margin-top: 16px;
+    font-size: 12px;
+    color: var(--text-dim);
+    font-style: italic;
+    line-height: 1.6;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 480px) {
+    .question-card { padding: 22px 18px 18px; }
+    .option { padding: 12px 14px; }
+    .answers-grid { grid-template-columns: repeat(2,1fr); }
+    .history-item { grid-template-columns: 1fr auto auto; }
+    .history-chevron { display: none; }
+    .history-stats { grid-template-columns: repeat(3,1fr); }
+    .nav-tab { font-size: 10px; padding: 9px 10px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="logo-badge">
+      <div class="dot"></div>
+      <span>Ultra Bet</span>
+    </div>
+    <h1>Jogo Responsável</h1>
+    <p class="intro-text">
+      Queremos garantir que sua experiência na <strong style="color:var(--gold)">ULTRA BET</strong> seja sempre positiva e equilibrada.
+      Este questionário rápido nos ajuda a entender seu perfil de uso — leva menos de 2 minutos.
+    </p>
+  </div>
+
+  <!-- Navigation Tabs -->
+  <div class="nav-tabs">
+    <button class="nav-tab active" id="tab-form" onclick="showTab('form')">
+      📋 &nbsp;Avaliação
+    </button>
+    <button class="nav-tab" id="tab-history" onclick="showTab('history')">
+      🕘 &nbsp;Histórico
+    </button>
+  </div>
+
+  <!-- ══════════════════ FORM SCREEN ══════════════════ -->
+  <div id="screen-form">
+
+    <!-- Progress -->
+    <div class="progress-wrap">
+      <div class="progress-info">
+        <span>Progresso</span>
+        <strong id="progress-text">0 / 15</strong>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <div class="form-wrap" id="form-wrap">
+      <div class="privacy-box">
+        <div class="privacy-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Privacidade &amp; LGPD
+        </div>
+        As informações fornecidas serão tratadas de forma confidencial e utilizadas exclusivamente para fins de prevenção e promoção do Jogo Responsável, em conformidade com a <strong style="color:var(--text)">Lei nº 13.709/2018 (LGPD)</strong>. Seus dados não serão compartilhados com terceiros para fins comerciais.
+      </div>
+
+      <p style="font-size:13px; color:var(--text-dim); margin-bottom:28px; text-align:center;">
+        Selecione a opção que melhor representa seu comportamento.
+      </p>
+
+      <div id="questions-container"></div>
+
+      <div class="submit-wrap">
+        <button class="submit-btn" id="submit-btn" disabled onclick="submitForm()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          Enviar Respostas
+        </button>
+        <p class="submit-note">Suas respostas são anônimas e confidenciais.</p>
+      </div>
+    </div><!-- /form-wrap -->
+
+    <!-- Result Screen (shown after submit, within form tab) -->
+    <div class="result-screen" id="result-screen"></div>
+
+  </div><!-- /screen-form -->
+
+  <!-- ══════════════════ HISTORY SCREEN ══════════════════ -->
+  <div id="screen-history" style="display:none;">
+    <div class="history-screen visible" id="history-content"></div>
+  </div>
+
+</div><!-- /wrapper -->
+
+<!-- Modal for history detail -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal-box" id="modal-box"></div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════
+   QUESTIONS DATA
+══════════════════════════════════════════════════ */
+const _Q = [
+  { text: "Com que frequência você aposta?", options: [
+    { label: "Raramente", score: 0 },
+    { label: "Algumas vezes por mês", score: 1 },
+    { label: "Algumas vezes por semana", score: 2 },
+    { label: "Todos os dias", score: 3 }
+  ]},
+  { text: "Você costuma apostar mais do que planejou inicialmente?", options: [
+    { label: "Nunca", score: 0 },
+    { label: "Raramente", score: 1 },
+    { label: "Às vezes", score: 2 },
+    { label: "Frequentemente", score: 3 }
+  ]},
+  { text: "Já tentou reduzir ou parar de apostar e não conseguiu?", options: [
+    { label: "Nunca", score: 0 },
+    { label: "Já tentei, mas consegui", score: 1 },
+    { label: "Já tentei e tive dificuldade", score: 2 },
+    { label: "Já tentei várias vezes sem sucesso", score: 3 }
+  ]},
+  { text: "Você já apostou para recuperar perdas anteriores?", options: [
+    { label: "Nunca", score: 0 },
+    { label: "Raramente", score: 1 },
+    { label: "Às vezes", score: 2 },
+    { label: "Frequentemente", score: 3 }
+  ]},
+  { text: "Como você se sente quando não está apostando?", options: [
+    { label: "Normal", score: 0 },
+    { label: "Levemente entediado", score: 1 },
+    { label: "Ansioso", score: 2 },
+    { label: "Irritado ou inquieto", score: 3 }
+  ]},
+  { text: "O jogo já afetou seu sono?", options: [
+    { label: "Nunca", score: 0 },
+    { label: "Raramente", score: 1 },
+    { label: "Às vezes", score: 2 },
+    { label: "Frequentemente", score: 3 }
+  ]},
+  { text: "Você já escondeu de alguém o quanto aposta?", options: [
+    { label: "Nunca", score: 0 },
+    { label: "Raramente", score: 1 },
+    { label: "Às vezes", score: 2 },
+    { label: "Frequentemente", score: 3 }
+  ]},
+  { text: "Já deixou de cumprir compromissos por causa do jogo?", options: [
+    { label: "Nunca", score: 0 },
+    { label: "Raramente", score: 1 },
+    { label: "Às vezes", score: 2 },
+    { label: "Frequentemente", score: 3 }
+  ]},
+  { text: "Você utiliza dinheiro destinado a outras despesas para apostar?", options: [
+    { label: "Nunca", score: 0 },
+    { label: "Raramente", score: 1 },
+    { label: "Às vezes", score: 2 },
+    { label: "Frequentemente", score: 3 }
+  ]},
+  { text: "Já pediu dinheiro emprestado ou usou crédito para apostar?", options: [
+    { label: "Nunca", score: 0 },
+    { label: "Raramente", score: 1 },
+    { label: "Às vezes", score: 2 },
+    { label: "Frequentemente", score: 3 }
+  ]},
+  { text: "Você sente necessidade de apostar valores cada vez maiores?", options: [
+    { label: "Nunca", score: 0 },
+    { label: "Raramente", score: 1 },
+    { label: "Às vezes", score: 2 },
+    { label: "Frequentemente", score: 3 }
+  ]},
+  { text: "O jogo já causou problemas em relacionamentos?", options: [
+    { label: "Nunca", score: 0 },
+    { label: "Raramente", score: 1 },
+    { label: "Às vezes", score: 2 },
+    { label: "Frequentemente", score: 3 }
+  ]},
+  { text: "Você já apostou para aliviar estresse, tristeza ou ansiedade?", options: [
+    { label: "Nunca", score: 0 },
+    { label: "Raramente", score: 1 },
+    { label: "Às vezes", score: 2 },
+    { label: "Frequentemente", score: 3 }
+  ]},
+  { text: "Você perde a noção do tempo quando está jogando?", options: [
+    { label: "Nunca", score: 0 },
+    { label: "Raramente", score: 1 },
+    { label: "Às vezes", score: 2 },
+    { label: "Frequentemente", score: 3 }
+  ]},
+  { text: "Você já pensou que pode ter um problema com jogo?", options: [
+    { label: "Nunca", score: 0 },
+    { label: "Já pensei, mas não acredito", score: 1 },
+    { label: "Às vezes acho que sim", score: 2 },
+    { label: "Sim, acredito que tenho", score: 3 }
+  ]},
+];
+
+/* ══════════════════════════════════════════════════
+   RISK CONFIG
+   _RISK.*.public  → exibido ao cliente (neutro, educativo)
+   _RISK.*.internal → salvo no histórico (operacional)
+══════════════════════════════════════════════════ */
+const _RISK = {
+  low: {
+    key: 'low', label: 'Baixo Risco', range: '0–10',
+    color: '#2ECC71',
+    barColor: 'linear-gradient(90deg,#1a9e52,#2ECC71)',
+    icon: '✅',
+    // ── Visão pública (cliente) ──────────────────
+    public: {
+      message: 'Seu resultado indica um relacionamento equilibrado com o jogo. Continue mantendo o jogo como uma forma de entretenimento saudável, dentro dos seus limites pessoais.',
+      tips: [
+        'Estabeleça um orçamento fixo para entretenimento e respeite-o.',
+        'Jogue por diversão, nunca como forma de obter renda.',
+        'Mantenha o equilíbrio entre o jogo e outras atividades.',
+      ],
+      showSupportLinks: false
+    },
+    // ── Visão interna (empresa/compliance) ───────
+    internal: {
+      interpretation: 'Perfil indica relacionamento equilibrado com o jogo. Sem sinais significativos de comportamento problemático.',
+      recommendations: [
+        { icon: '✔', text: 'Nenhuma ação imediata necessária.' },
+        { icon: '📊', text: 'Manter monitoramento padrão e reavaliação periódica.' },
+        { icon: '💡', text: 'Continue definindo limites de depósito e tempo de jogo como boa prática.' },
+      ],
+      flags: { limiteSugerido: false, monitoramento: false, ddiRecomendada: false }
+    }
+  },
+  mod: {
+    key: 'mod', label: 'Risco Moderado', range: '11–20',
+    color: '#EAB308',
+    barColor: 'linear-gradient(90deg,#b48a06,#EAB308)',
+    icon: '⚠️',
+    public: {
+      message: 'Seu resultado indica que pode ser útil refletir sobre seus hábitos de jogo. Recomendamos manter o jogo como forma de entretenimento e dentro de limites saudáveis.',
+      tips: [
+        'Considere fazer pausas regulares durante as sessões de jogo.',
+        'Defina um tempo máximo por sessão antes de começar a jogar.',
+        'Converse com alguém de confiança se sentir que o jogo está ocupando espaço demais.',
+      ],
+      showSupportLinks: false
+    },
+    internal: {
+      interpretation: 'Perfil apresenta indicadores que merecem atenção. Padrões como apostar acima do planejado ou desconforto quando não está jogando podem evoluir.',
+      recommendations: [
+        { icon: '⏸', text: 'Recomendamos uma pausa voluntária de pelo menos 48 horas.' },
+        { icon: '📉', text: 'Considere reduzir o valor e a frequência das apostas.' },
+        { icon: '🔔', text: 'Ative os alertas de tempo e limite de depósito na plataforma.' },
+        { icon: '📋', text: 'Monitoramento leve iniciado — próxima avaliação sugerida em 30 dias.' },
+      ],
+      flags: { limiteSugerido: false, monitoramento: true, ddiRecomendada: false }
+    }
+  },
+  high: {
+    key: 'high', label: 'Alto Risco', range: '21–30',
+    color: '#F97316',
+    barColor: 'linear-gradient(90deg,#c45a0c,#F97316)',
+    icon: '🔴',
+    public: {
+      message: 'Seu resultado indica que pode ser útil refletir sobre seus hábitos de jogo. Recomendamos manter o jogo como forma de entretenimento e dentro de limites saudáveis. Se você sentir necessidade de apoio, existem serviços gratuitos disponíveis de suporte emocional.',
+      tips: [
+        'Reflita sobre o espaço que o jogo ocupa na sua rotina.',
+        'Considere uma pausa voluntária para reorganizar suas prioridades.',
+        'Falar com alguém de confiança pode ser um primeiro passo importante.',
+      ],
+      showSupportLinks: true
+    },
+    internal: {
+      interpretation: 'Perfil apresenta múltiplos indicadores de risco elevado: dificuldade em controlar impulso de apostar, uso de recursos financeiros essenciais, impacto no sono e nos relacionamentos.',
+      recommendations: [
+        { icon: '⛔', text: 'Sugerimos redução imediata dos limites de depósito diário e semanal.' },
+        { icon: '📄', text: 'Solicitar comprovante de renda ou capacidade financeira para continuidade de uso.' },
+        { icon: '🔍', text: 'Monitoramento ativo iniciado — transações acima de R$ 500 sujeitas a revisão.' },
+        { icon: '📢', text: 'Aviso formal de comportamento de risco registrado no perfil.' },
+        { icon: '🤝', text: 'Encaminhar ao suporte de Jogo Responsável.' },
+      ],
+      flags: { limiteSugerido: true, monitoramento: true, ddiRecomendada: true }
+    }
+  },
+  crit: {
+    key: 'crit', label: 'Risco Crítico', range: '31–45',
+    color: '#EF4444',
+    barColor: 'linear-gradient(90deg,#b91c1c,#EF4444)',
+    icon: '🚨',
+    public: {
+      message: 'Seu resultado indica que pode ser útil refletir sobre seus hábitos de jogo. Recomendamos manter o jogo como forma de entretenimento e dentro de limites saudáveis. Se você sentir necessidade de apoio, existem serviços gratuitos disponíveis de suporte emocional.',
+      tips: [
+        'Seu bem-estar é o que mais importa. Não hesite em buscar apoio.',
+        'Existem profissionais e serviços gratuitos preparados para ajudar.',
+        'Uma pausa pode ser um passo valioso para cuidar de si mesmo.',
+      ],
+      showSupportLinks: true
+    },
+    internal: {
+      interpretation: 'Perfil indica sinais sérios de jogo problemático ou dependência. Impacto significativo em finanças, relacionamentos, saúde e bem-estar emocional identificado.',
+      recommendations: [
+        { icon: '🚫', text: 'Limitação de depósito diário recomendada para aplicação imediata.' },
+        { icon: '⏹', text: 'Sugestão formal de pausa de jogo por no mínimo 30 dias (autoexclusão disponível).' },
+        { icon: '📄', text: 'Solicitação obrigatória de comprovante de renda e capacidade financeira.' },
+        { icon: '📞', text: 'Encaminhamento ao suporte de Jogo Responsável (canal 24h).' },
+        { icon: '🔒', text: 'Conta sob monitoramento intensivo — revisão operacional necessária.' },
+      ],
+      flags: { limiteSugerido: true, monitoramento: true, ddiRecomendada: true }
+    }
+  }
+};
+
+/* ══════════════════════════════════════════════════
+   STATE
+══════════════════════════════════════════════════ */
+const _answers = {};
+
+function _getRisk(score) {
+  if (score <= 10) return _RISK.low;
+  if (score <= 20) return _RISK.mod;
+  if (score <= 30) return _RISK.high;
+  return _RISK.crit;
+}
+
+function _genId() {
+  return 'JR-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).substr(2,4).toUpperCase();
+}
+
+function _formatDate(iso) {
+  const d = new Date(iso);
+  return d.toLocaleDateString('pt-BR') + ' às ' + d.toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit' });
+}
+
+/* ══════════════════════════════════════════════════
+   STORAGE
+══════════════════════════════════════════════════ */
+function _saveRecord(record) {
+  try {
+    const raw = localStorage.getItem('_ub_jr_hist');
+    const hist = raw ? JSON.parse(raw) : [];
+    hist.unshift(record);
+    localStorage.setItem('_ub_jr_hist', JSON.stringify(hist));
+  } catch(e) { /* silently fail */ }
+}
+
+function _loadHistory() {
+  try {
+    const raw = localStorage.getItem('_ub_jr_hist');
+    return raw ? JSON.parse(raw) : [];
+  } catch(e) { return []; }
+}
+
+function _clearHistory() {
+  if (confirm('Deseja apagar todo o histórico de avaliações?')) {
+    localStorage.removeItem('_ub_jr_hist');
+    renderHistory();
+  }
+}
+
+/* ══════════════════════════════════════════════════
+   BUILD QUESTIONS
+══════════════════════════════════════════════════ */
+function buildQuestions() {
+  const container = document.getElementById('questions-container');
+  _Q.forEach((q, qi) => {
+    const delay = (qi * 0.04).toFixed(2);
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.id = `card-${qi}`;
+    card.style.animationDelay = `${delay}s`;
+
+    const optionsHTML = q.options.map((opt, oi) => `
+      <div class="option" id="opt-${qi}-${oi}" onclick="selectOption(${qi},${oi},${opt.score})">
+        <div class="radio-circle"></div>
+        <span class="option-label">${opt.label}</span>
+      </div>
+    `).join('');
+
+    card.innerHTML = `
+      <div class="q-number">Pergunta ${qi + 1} de ${_Q.length}</div>
+      <div class="q-text">${q.text}</div>
+      <div class="options">${optionsHTML}</div>
+    `;
+    container.appendChild(card);
+
+    if ((qi + 1) % 5 === 0 && qi < _Q.length - 1) {
+      const div = document.createElement('div');
+      div.className = 'section-divider';
+      div.innerHTML = `<span>Continuando</span>`;
+      container.appendChild(div);
+    }
+  });
+}
+
+/* ══════════════════════════════════════════════════
+   QUESTION INTERACTION
+══════════════════════════════════════════════════ */
+function selectOption(qi, oi, score) {
+  _Q[qi].options.forEach((_, i) => {
+    const el = document.getElementById(`opt-${qi}-${i}`);
+    if (el) el.classList.remove('selected');
+  });
+  const selected = document.getElementById(`opt-${qi}-${oi}`);
+  if (selected) selected.classList.add('selected');
+  const card = document.getElementById(`card-${qi}`);
+  if (card) card.classList.add('answered');
+  _answers[qi] = { score, label: _Q[qi].options[oi].label, question: _Q[qi].text };
+  updateProgress();
+  if (Object.keys(_answers).length === _Q.length) {
+    document.getElementById('submit-btn').disabled = false;
+  }
+}
+
+function updateProgress() {
+  const count = Object.keys(_answers).length;
+  const pct = (count / _Q.length) * 100;
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-text').textContent = `${count} / ${_Q.length}`;
+}
+
+/* ══════════════════════════════════════════════════
+   STATE MACHINE  —  FORM_VIEW  |  RESULT_VIEW
+══════════════════════════════════════════════════ */
+let _appState = 'FORM_VIEW'; // 'FORM_VIEW' | 'RESULT_VIEW'
+
+function _enterFormView() {
+  _appState = 'FORM_VIEW';
+
+  // 1. Wipe answer state
+  Object.keys(_answers).forEach(k => delete _answers[k]);
+
+  // 2. Reset progress
+  document.getElementById('submit-btn').disabled = true;
+  document.getElementById('progress-fill').style.width = '0%';
+  document.getElementById('progress-text').textContent = '0 / 15';
+
+  // 3. Clear all option selections and card states
+  document.querySelectorAll('.option').forEach(el => el.classList.remove('selected'));
+  document.querySelectorAll('.question-card').forEach(el => el.classList.remove('answered'));
+
+  // 4. Show form, hide result — explicit display control
+  document.getElementById('form-wrap').style.display   = 'block';
+  const rs = document.getElementById('result-screen');
+  rs.classList.remove('visible');
+  rs.style.display = 'none';
+  rs.innerHTML = '';
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function _enterResultView(record, risk) {
+  _appState = 'RESULT_VIEW';
+
+  // Hide form, show result container
+  document.getElementById('form-wrap').style.display = 'none';
+  const rs = document.getElementById('result-screen');
+  rs.style.display = 'block';
+
+  renderResult(record, risk);
+  rs.classList.add('visible');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ══════════════════════════════════════════════════
+   SUBMIT
+══════════════════════════════════════════════════ */
+function submitForm() {
+  const total = Object.values(_answers).reduce((a, b) => a + b.score, 0);
+  const risk  = _getRisk(total);
+
+  const answersArr = Object.keys(_answers).sort((a,b) => +a - +b).map(k => ({
+    qi: +k,
+    question: _answers[k].question,
+    label:    _answers[k].label,
+    score:    _answers[k].score
+  }));
+
+  // ── internalResult: salvo no histórico, nunca exibido ao cliente ──────────
+  const internalResult = {
+    score:                  total,
+    nivel:                  risk.key,
+    nivelLabel:             risk.label,
+    interpretacaoCompleta:  risk.internal.interpretation,
+    recomendacoesOperacionais: risk.internal.recommendations.map(r => r.text),
+    flags:                  risk.internal.flags
+  };
+
+  // ── publicResult: exibido ao cliente (neutro, educativo) ──────────────────
+  const publicResult = {
+    message:          risk.public.message,
+    tips:             risk.public.tips,
+    showSupportLinks: risk.public.showSupportLinks
+  };
+
+  // ── record completo salvo em localStorage ─────────────────────────────────
+  const record = {
+    id:             _genId(),
+    timestamp:      new Date().toISOString(),
+    answers:        answersArr,
+    internalResult,
+    publicResult
+  };
+
+  _saveRecord(record);
+  _enterResultView(record, risk);
+}
+
+/* ══════════════════════════════════════════════════
+   RESET — public entry point for "Nova Avaliação"
+══════════════════════════════════════════════════ */
+function resetForm() {
+  _enterFormView();
+}
+
+/* ══════════════════════════════════════════════════
+   RENDER RESULT — VISÃO DO CLIENTE (publicResult)
+   Não exibe score numérico, nível técnico, flags,
+   recomendações operacionais ou ações internas.
+══════════════════════════════════════════════════ */
+function renderResult(record, risk) {
+  const pub = record.publicResult;
+
+  const tipsHtml = pub.tips.map(t =>
+    `<div class="rec-item low" style="background:rgba(255,255,255,0.03); border-color:rgba(255,255,255,0.08); color:var(--text-dim)">
+      <span class="rec-icon">💡</span><span>${t}</span>
+    </div>`
+  ).join('');
+
+  const supportBlock = pub.showSupportLinks ? `
+    <div class="sus-block">
+      <div class="sus-block-title">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.53 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 5.9 5.9l.96-.96a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 21.28 16v.62z"/></svg>
+        📌 Recomendação de Apoio à Saúde Mental
+      </div>
+      <p class="sus-block-text">
+        Caso necessite de apoio adicional, sugerimos a utilização dos serviços públicos de saúde mental disponibilizados pelo Sistema Único de Saúde (SUS), por meio dos canais abaixo:
+      </p>
+      <div class="sus-links">
+        <div class="sus-link-item">
+          <span>🔎</span>
+          <span><strong>Encontre um serviço de saúde:</strong><br>
+            <a href="https://meususdigital.saude.gov.br/publico/rede-saude" target="_blank" rel="noopener">https://meususdigital.saude.gov.br/publico/rede-saude</a>
+          </span>
+        </div>
+        <div class="sus-link-item">
+          <span>📞</span>
+          <span><strong>Telefone:</strong> 136 (Ouvidoria Geral do SUS)</span>
+        </div>
+        <div class="sus-link-item">
+          <span>💻</span>
+          <span><strong>Ouvidoria online (OuvidorSUS):</strong><br>
+            <a href="https://www.gov.br/saude/pt-br/canais-de-atendimento/ouvsus" target="_blank" rel="noopener">https://www.gov.br/saude/pt-br/canais-de-atendimento/ouvsus</a>
+          </span>
+        </div>
+        <div class="sus-link-item">
+          <span>🫂</span>
+          <span><strong>CVV — Centro de Valorização da Vida:</strong> ligue <strong>188</strong> (24h, gratuito)</span>
+        </div>
+      </div>
+      <p class="sus-footer-note">
+        Permanecemos à disposição para quaisquer esclarecimentos adicionais por meio de nossos canais oficiais de atendimento.
+      </p>
+    </div>` : '';
+
+  document.getElementById('result-screen').innerHTML = `
+    <div class="result-header">
+      <div class="thankyou-icon" style="width:72px;height:72px;background:rgba(46,204,113,0.1);border:2px solid ${risk.color};border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-size:30px;">
+        ${risk.icon}
+      </div>
+      <h2 style="font-family:'Syne',sans-serif;font-size:clamp(22px,4vw,30px);font-weight:800;color:var(--text);margin-bottom:12px;">
+        Avaliação Concluída
+      </h2>
+      <p style="font-size:13px;color:var(--text-dim);font-family:'Syne',sans-serif;letter-spacing:1px;">
+        ${_formatDate(record.timestamp)}
+      </p>
+    </div>
+
+    <div class="result-card">
+      <div class="result-card-title">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Sobre o seu resultado
+      </div>
+      <p class="interpretation-text">${pub.message}</p>
+    </div>
+
+    <div class="result-card">
+      <div class="result-card-title">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        Dicas de Jogo Responsável
+      </div>
+      <div class="recs-list">${tipsHtml}</div>
+    </div>
+
+    ${supportBlock}
+
+    <div style="text-align:center">
+      <button class="new-eval-btn" onclick="resetForm()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4"/></svg>
+        Nova Avaliação
+      </button>
+    </div>
+  `;
+}
+
+/* ══════════════════════════════════════════════════
+   HISTORY  (visão interna — usa internalResult)
+══════════════════════════════════════════════════ */
+function renderHistory() {
+  const hist = _loadHistory();
+  const container = document.getElementById('history-content');
+
+  if (hist.length === 0) {
+    container.innerHTML = `
+      <div class="history-empty">
+        <div class="history-empty-icon">📋</div>
+        <div class="history-empty-text">Nenhuma avaliação realizada</div>
+        <p style="font-size:13px;">Complete o questionário para ver o histórico aqui.</p>
+      </div>`;
+    return;
+  }
+
+  // Support both new format (internalResult) and legacy records
+  const getScore = h => h.internalResult ? h.internalResult.score : (h.score || 0);
+  const getLevel = h => h.internalResult ? h.internalResult.nivel : (h.level || 'low');
+
+  const scores   = hist.map(getScore);
+  const avgScore = Math.round(scores.reduce((a,b) => a+b, 0) / scores.length);
+  const critCount = hist.filter(h => getLevel(h) === 'crit').length;
+
+  const statsHtml = `
+    <div class="history-stats">
+      <div class="history-stat">
+        <div class="history-stat-val">${hist.length}</div>
+        <div class="history-stat-lbl">Avaliações</div>
+      </div>
+      <div class="history-stat">
+        <div class="history-stat-val" style="color:${_getRisk(avgScore).color}">${avgScore}</div>
+        <div class="history-stat-lbl">Score Médio</div>
+      </div>
+      <div class="history-stat">
+        <div class="history-stat-val" style="color:${critCount > 0 ? '#EF4444' : '#2ECC71'}">${critCount}</div>
+        <div class="history-stat-lbl">Críticos</div>
+      </div>
+    </div>`;
+
+  const clearBtn = `<button class="clear-history-btn" onclick="_clearHistory()">🗑 Limpar histórico</button>`;
+
+  const itemsHtml = hist.map(h => {
+    const score = getScore(h);
+    const r = _getRisk(score);
+    return `
+    <div class="history-item" onclick="openModal('${h.id}')">
+      <div>
+        <div class="history-item-date">${_formatDate(h.timestamp)}</div>
+        <div class="history-item-id">${h.id}</div>
+      </div>
+      <div class="history-score">
+        <div class="history-score-num" style="color:${r.color}">${score}</div>
+        <div class="history-score-label">/ 45</div>
+      </div>
+      <span class="risk-badge-sm ${r.key}">${r.label}</span>
+      <span class="history-chevron">›</span>
+    </div>`;
+  }).join('');
+
+  container.innerHTML = statsHtml + clearBtn + `<div class="history-list">${itemsHtml}</div>`;
+}
+
+/* ══════════════════════════════════════════════════
+   MODAL  (visão interna — exibe internalResult)
+══════════════════════════════════════════════════ */
+function openModal(id) {
+  const hist = _loadHistory();
+  const rec  = hist.find(h => h.id === id);
+  if (!rec) return;
+
+  // Support both new and legacy record formats
+  const ir    = rec.internalResult || { score: rec.score || 0, nivel: rec.level || 'low', nivelLabel: rec.levelLabel || '', interpretacaoCompleta: '', recomendacoesOperacionais: rec.recommendations || [], flags: {} };
+  const risk  = _getRisk(ir.score);
+
+  const recItems = ir.recomendacoesOperacionais.map(t =>
+    `<div class="rec-item ${risk.key}" style="margin-bottom:8px"><span class="rec-icon">•</span><span style="font-size:13px">${t}</span></div>`
+  ).join('');
+
+  const flagsHtml = ir.flags ? `
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px">
+      <span style="padding:3px 10px;border-radius:99px;font-size:10px;font-weight:700;font-family:'Syne',sans-serif;letter-spacing:1px;background:${ir.flags.limiteSugerido?'rgba(249,115,22,0.15)':'rgba(255,255,255,0.04)'};border:1px solid ${ir.flags.limiteSugerido?'rgba(249,115,22,0.4)':'rgba(255,255,255,0.08)'};color:${ir.flags.limiteSugerido?'#F97316':'#555577'}">LIMITE${ir.flags.limiteSugerido?' ✔':' –'}</span>
+      <span style="padding:3px 10px;border-radius:99px;font-size:10px;font-weight:700;font-family:'Syne',sans-serif;letter-spacing:1px;background:${ir.flags.monitoramento?'rgba(234,179,8,0.15)':'rgba(255,255,255,0.04)'};border:1px solid ${ir.flags.monitoramento?'rgba(234,179,8,0.4)':'rgba(255,255,255,0.08)'};color:${ir.flags.monitoramento?'#EAB308':'#555577'}">MONITORAMENTO${ir.flags.monitoramento?' ✔':' –'}</span>
+      <span style="padding:3px 10px;border-radius:99px;font-size:10px;font-weight:700;font-family:'Syne',sans-serif;letter-spacing:1px;background:${ir.flags.ddiRecomendada?'rgba(168,85,247,0.15)':'rgba(255,255,255,0.04)'};border:1px solid ${ir.flags.ddiRecomendada?'rgba(168,85,247,0.4)':'rgba(255,255,255,0.08)'};color:${ir.flags.ddiRecomendada?'#a855f7':'#555577'}">DDI${ir.flags.ddiRecomendada?' ✔':' –'}</span>
+    </div>` : '';
+
+  const ansChips = rec.answers.map((a, i) =>
+    `<div class="answer-chip" style="font-size:11px">
+      <div class="answer-chip-q">P${i+1}</div>
+      <div class="answer-chip-v s${a.score}">${a.score}</div>
+    </div>`
+  ).join('');
+
+  document.getElementById('modal-box').innerHTML = `
+    <div class="modal-header">
+      <div>
+        <div style="font-family:'Syne',sans-serif;font-size:10px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px">VISÃO INTERNA — USO EXCLUSIVO DA EMPRESA</div>
+        <div style="font-family:'Syne',sans-serif;font-size:11px;color:var(--text-dim);margin-bottom:4px">${_formatDate(rec.timestamp)}</div>
+        <div style="font-family:monospace;font-size:10px;color:var(--text-dim);opacity:0.5">${rec.id}</div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+
+    <div style="text-align:center;margin-bottom:24px">
+      <span class="risk-badge-large ${risk.key}" style="margin-bottom:12px;display:inline-flex">${risk.icon} ${risk.label}</span>
+      <div><span style="font-family:'Syne',sans-serif;font-size:40px;font-weight:800;color:${risk.color}">${ir.score}</span><span style="color:var(--text-dim);font-size:18px"> / 45</span></div>
+      ${flagsHtml}
+    </div>
+
+    ${ir.interpretacaoCompleta ? `
+    <div style="margin-bottom:20px">
+      <div class="result-card-title" style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px">Interpretação Interna</div>
+      <p style="font-size:13px;color:var(--text-dim);line-height:1.7">${ir.interpretacaoCompleta}</p>
+    </div>` : ''}
+
+    <div style="margin-bottom:20px">
+      <div class="result-card-title" style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px">Recomendações Operacionais</div>
+      ${recItems || '<p style="font-size:13px;color:var(--text-dim)">Sem recomendações operacionais.</p>'}
+    </div>
+
+    <div>
+      <div class="result-card-title" style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px">Respostas (${rec.answers.length} perguntas)</div>
+      <div class="answers-grid">${ansChips}</div>
+    </div>
+  `;
+
+  document.getElementById('modal-overlay').classList.add('open');
+}
+
+function closeModal(e) {
+  if (!e || e.target === document.getElementById('modal-overlay')) {
+    document.getElementById('modal-overlay').classList.remove('open');
+  }
+}
+
+/* ══════════════════════════════════════════════════
+   TABS
+══════════════════════════════════════════════════ */
+function showTab(tab) {
+  document.getElementById('screen-form').style.display    = tab === 'form'    ? 'block' : 'none';
+  document.getElementById('screen-history').style.display = tab === 'history' ? 'block' : 'none';
+  document.getElementById('tab-form').classList.toggle('active',    tab === 'form');
+  document.getElementById('tab-history').classList.toggle('active', tab === 'history');
+
+  if (tab === 'form' && _appState === 'FORM_VIEW') {
+    // Ensure form is visible (not result) when returning to form tab
+    document.getElementById('form-wrap').style.display = 'block';
+    const rs = document.getElementById('result-screen');
+    if (!rs.classList.contains('visible')) rs.style.display = 'none';
+  }
+  if (tab === 'history') renderHistory();
+}
+
+/* ══════════════════════════════════════════════════
+   INIT
+══════════════════════════════════════════════════ */
+buildQuestions();
+</script>
+</body>
+</html>
