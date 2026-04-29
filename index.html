@@ -1798,12 +1798,13 @@ function _validarCPF(cpf) {
   return r === +c[10];
 }
 
-/* validateCPF — retorna { ok, reason } para uso no fluxo */
+/* validateCPF — protótipo: aceita todo CPF válido exceto 11111111111
+   Razão: simulação de base completa; único CPF negativo fixo é 111...  */
 function validateCPF(cpfNums) {
   const validFormat = _validarCPF(cpfNums);
   if (!validFormat) return { ok: false, reason: 'invalid_format' };
-  const exists = !!MOCK_CLIENTES[cpfNums];
-  if (!exists)    return { ok: false, reason: 'not_found' };
+  // Único CPF bloqueado fixo conforme especificação
+  if (cpfNums === '11111111111') return { ok: false, reason: 'not_found' };
   return { ok: true };
 }
 
@@ -1895,23 +1896,31 @@ function _startTokenQuiz() {
     return; // mantém na tela CPF — revalidável
   }
 
-  // ETAPA 1 — Validar CPF (formato + dígito verificador)
-  // ETAPA 2 — Consultar MOCK_CLIENTES
+  // ETAPA 1 — Validar CPF (formato + verificar bloqueio fixo 111...)
   const result = validateCPF(cpfNums);
 
   if (!result.ok) {
-    // Erro de formato ou não encontrado — exibir mensagem e MANTER na tela CPF
+    // CPF inválido ou bloqueado fixo — manter na tela CPF, nunca travar
     err.textContent = result.reason === 'invalid_format'
       ? 'CPF inválido. Verifique e tente novamente.'
       : 'Cliente não possui cadastro na plataforma.';
     err.style.display = 'block';
-    // NÃO alterar APP_STATE.step — usuário permanece em 'CPF'
-    // NÃO bloquear — próxima tentativa imediata permitida
-    return;
+    return; // step permanece 'CPF' — revalidável imediatamente
   }
 
-  // ETAPA 3 — CPF válido e encontrado: atualizar cpfStatus e clientData
-  const cliente = MOCK_CLIENTES[cpfNums];
+  // ETAPA 2 — CPF válido: criar cliente fictício automaticamente (PROTÓTIPO)
+  // Verificar se é um cliente do mock (demo); caso contrário, gerar automaticamente
+  const mockCliente = MOCK_CLIENTES[cpfNums];
+  const randomId    = 'CLT-' + (Math.floor(Math.random() * 9000) + 1000);
+  const randomNomes = ['Alex Ferreira','Bruno Lima','Carla Souza','Diego Costa',
+                       'Elena Martins','Fábio Rocha','Gabriela Nunes','Hugo Alves'];
+  const randomNome  = randomNomes[Math.floor(Math.random() * randomNomes.length)];
+
+  const cliente = mockCliente
+    ? { idCliente: mockCliente.idCliente, nome: mockCliente.nome }
+    : { idCliente: randomId, nome: randomNome };
+
+  // ETAPA 3 — Definir clientData e atualizar APP_STATE
   APP_STATE.cpfStatus.valid  = true;
   APP_STATE.cpfStatus.exists = true;
   APP_STATE.cpf        = cpfNums;
