@@ -1798,13 +1798,12 @@ function _validarCPF(cpf) {
   return r === +c[10];
 }
 
-/* validateCPF — protótipo: aceita todo CPF válido exceto 11111111111
-   Razão: simulação de base completa; único CPF negativo fixo é 111...  */
+/* validateCPF — PROTÓTIPO: aceita qualquer CPF com 11 dígitos
+   ÚNICA regra de bloqueio: 11111111111 (e variações com máscara)
+   Não aplica validação de dígito verificador — base é simulada  */
 function validateCPF(cpfNums) {
-  const validFormat = _validarCPF(cpfNums);
-  if (!validFormat) return { ok: false, reason: 'invalid_format' };
-  // Único CPF bloqueado fixo conforme especificação
-  if (cpfNums === '11111111111') return { ok: false, reason: 'not_found' };
+  if (cpfNums.length !== 11)         return { ok: false, reason: 'invalid_format' };
+  if (cpfNums === '11111111111')     return { ok: false, reason: 'not_found' };
   return { ok: true };
 }
 
@@ -1896,38 +1895,33 @@ function _startTokenQuiz() {
     return; // mantém na tela CPF — revalidável
   }
 
-  // ETAPA 1 — Validar CPF (formato + verificar bloqueio fixo 111...)
+  // ETAPA 1 — Verificar CPF: 11 dígitos e não bloqueado
   const result = validateCPF(cpfNums);
 
   if (!result.ok) {
-    // CPF inválido ou bloqueado fixo — manter na tela CPF, nunca travar
-    err.textContent = result.reason === 'invalid_format'
-      ? 'CPF inválido. Verifique e tente novamente.'
+    err.textContent = cpfNums.length !== 11
+      ? 'CPF deve ter 11 dígitos. Verifique e tente novamente.'
       : 'Cliente não possui cadastro na plataforma.';
     err.style.display = 'block';
-    return; // step permanece 'CPF' — revalidável imediatamente
+    return; // step permanece 'CPF' — revalidável imediatamente, sem travar
   }
 
-  // ETAPA 2 — CPF válido: criar cliente fictício automaticamente (PROTÓTIPO)
-  // Verificar se é um cliente do mock (demo); caso contrário, gerar automaticamente
+  // ETAPA 2 — Gerar cliente fictício automaticamente (PROTÓTIPO)
   const mockCliente = MOCK_CLIENTES[cpfNums];
-  const randomId    = 'CLT-' + (Math.floor(Math.random() * 9000) + 1000);
-  const randomNomes = ['Alex Ferreira','Bruno Lima','Carla Souza','Diego Costa',
-                       'Elena Martins','Fábio Rocha','Gabriela Nunes','Hugo Alves'];
-  const randomNome  = randomNomes[Math.floor(Math.random() * randomNomes.length)];
+  const randomId    = 'CLT-' + String(Math.floor(Math.random() * 90000) + 10000);
+  const firstNames  = ['Alex','Bruno','Carla','Diego','Elena','Fábio','Gabriela',
+                       'Hugo','Isabela','Jonas','Karen','Lucas','Marina','Natan'];
+  const randomNome  = 'Cliente ' + firstNames[Math.floor(Math.random() * firstNames.length)];
 
-  const cliente = mockCliente
-    ? { idCliente: mockCliente.idCliente, nome: mockCliente.nome }
-    : { idCliente: randomId, nome: randomNome };
+  const clienteBase = mockCliente
+    ? { idCliente: mockCliente.idCliente, nome: mockCliente.nome,   origem: 'mock' }
+    : { idCliente: randomId,             nome: randomNome,          origem: 'simulado' };
 
   // ETAPA 3 — Definir clientData e atualizar APP_STATE
   APP_STATE.cpfStatus.valid  = true;
   APP_STATE.cpfStatus.exists = true;
   APP_STATE.cpf        = cpfNums;
-  APP_STATE.clientData = { cpf: cpfNums, idCliente: cliente.idCliente, nome: cliente.nome };
-
-  // Condição de avanço: valid === true && exists === true
-  if (!APP_STATE.cpfStatus.valid || !APP_STATE.cpfStatus.exists) return;
+  APP_STATE.clientData = { cpf: cpfNums, ...clienteBase };
 
   // ETAPA 4 — Liberar quiz
   APP_STATE.step = 'QUIZ';
