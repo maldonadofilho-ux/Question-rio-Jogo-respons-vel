@@ -1572,7 +1572,7 @@
         <div class="id-field">
           <label>CPF</label>
           <input type="text" id="token-cpf-input" placeholder="000.000.000-00"
-                 maxlength="14" oninput="_fmtCPF(this)"
+                 maxlength="14" oninput="onCPFChange(this)"
                  onkeydown="if(event.key==='Enter') _startTokenQuiz()">
         </div>
         <label class="token-accept-row" for="token-accept-chk">
@@ -1764,7 +1764,13 @@ const APP_STATE = {
   cpf:         null,
   clientData:  null,
   step:        'TOKEN',     // 'TOKEN' | 'CPF' | 'QUIZ' | 'RESULT'
-  locked:      false
+  locked:      false,
+  cpfStatus: {
+    value:    null,
+    valid:    false,
+    exists:   false,
+    attempts: 0
+  }
 };
 
 /* ══════════════════════════════════════════════════
@@ -1792,7 +1798,31 @@ function _validarCPF(cpf) {
   return r === +c[10];
 }
 
-function _detectToken() {
+/* validateCPF — retorna { ok, reason } para uso no fluxo */
+function validateCPF(cpfNums) {
+  const validFormat = _validarCPF(cpfNums);
+  if (!validFormat) return { ok: false, reason: 'invalid_format' };
+  const exists = !!MOCK_CLIENTES[cpfNums];
+  if (!exists)    return { ok: false, reason: 'not_found' };
+  return { ok: true };
+}
+
+/* onCPFChange — reset obrigatório ao alterar CPF no input */
+function onCPFChange(inputEl) {
+  _fmtCPF(inputEl);
+  const cpfNums = inputEl.value.replace(/\D/g, '');
+  APP_STATE.cpfStatus = {
+    value:    cpfNums,
+    valid:    false,
+    exists:   false,
+    attempts: APP_STATE.cpfStatus.attempts + 1
+  };
+  APP_STATE.clientData = null;
+  APP_STATE.cpf        = null;
+  // Limpar mensagem de erro ao digitar
+  const err = document.getElementById('token-err');
+  if (err) err.style.display = 'none';
+}
   const params = new URLSearchParams(window.location.search);
   const tk     = params.get('token');
   if (!tk) return false;
@@ -1834,46 +1864,66 @@ function _detectToken() {
 /* ══════════════════════════════════════════════════
    TOKEN QUIZ — state machine obrigatória
    ORDEM FIXA: validar CPF → lookup MOCK → set data → quiz
+   CPF NUNCA bloqueia permanentemente — sempre revalidável
 ══════════════════════════════════════════════════ */
 function _startTokenQuiz() {
-  // Bloquear se step incorreto ou locked
-  if (APP_STATE.step !== 'CPF' || APP_STATE.locked) return;
+  // Bloquear apenas se token já respondido (locked) ou step errado
+  if (APP_STATE.locked) return;
+  if (APP_STATE.step !== 'CPF') return;
 
   const rawCpf = document.getElementById('token-cpf-input').value.trim();
   const aceite = document.getElementById('token-accept-chk').checked;
   const err    = document.getElementById('token-err');
+  const cpfNums = rawCpf.replace(/\D/g, '');
+
+  // Reset cpfStatus para esta tentativa (sempre reprocessar do zero)
+  APP_STATE.cpfStatus = {
+    value:    cpfNums,
+    valid:    false,
+    exists:   false,
+    attempts: APP_STATE.cpfStatus.attempts + 1
+  };
+  APP_STATE.clientData = null;
+  APP_STATE.cpf        = null;
+
+  // Verificar aceite
+  if (!aceite) {
+    err.textContent = 'Aceite os termos para continuar.';
+    err.style.display = 'block';
+    return; // mantém na tela CPF — revalidável
+  }
 
   // ETAPA 1 — Validar CPF (formato + dígito verificador)
-  const cpfNums = rawCpf.replace(/\D/g, '');
-  if (!_validarCPF(cpfNums) || !aceite) {
-    err.textContent = !aceite
-      ? 'Aceite os termos para continuar.'
-      : 'CPF inválido. Verifique e tente novamente.';
-    err.style.display = 'block';
-    return;
-  }
-  err.style.display = 'none';
-
   // ETAPA 2 — Consultar MOCK_CLIENTES
-  const cliente = MOCK_CLIENTES[cpfNums] || null;
+  const result = validateCPF(cpfNums);
 
-  // ETAPA 3 — Definir clientData (ou bloquear se inválido)
-  if (!cliente) {
-    err.textContent = 'Cliente não possui cadastro na plataforma.';
+  if (!result.ok) {
+    // Erro de formato ou não encontrado — exibir mensagem e MANTER na tela CPF
+    err.textContent = result.reason === 'invalid_format'
+      ? 'CPF inválido. Verifique e tente novamente.'
+      : 'Cliente não possui cadastro na plataforma.';
     err.style.display = 'block';
-    // NÃO avançar step para QUIZ
+    // NÃO alterar APP_STATE.step — usuário permanece em 'CPF'
+    // NÃO bloquear — próxima tentativa imediata permitida
     return;
   }
 
-  // Cliente válido — atualizar APP_STATE e _clientData
+  // ETAPA 3 — CPF válido e encontrado: atualizar cpfStatus e clientData
+  const cliente = MOCK_CLIENTES[cpfNums];
+  APP_STATE.cpfStatus.valid  = true;
+  APP_STATE.cpfStatus.exists = true;
   APP_STATE.cpf        = cpfNums;
   APP_STATE.clientData = { cpf: cpfNums, idCliente: cliente.idCliente, nome: cliente.nome };
-  APP_STATE.step       = 'QUIZ';
 
+  // Condição de avanço: valid === true && exists === true
+  if (!APP_STATE.cpfStatus.valid || !APP_STATE.cpfStatus.exists) return;
+
+  // ETAPA 4 — Liberar quiz
+  APP_STATE.step = 'QUIZ';
+  err.style.display = 'none';
   _authRole   = 'client';
   _clientData = APP_STATE.clientData;
 
-  // ETAPA 4 — Liberar quiz
   document.getElementById('token-screen').classList.remove('visible');
   hideAllScreens();
   _enterFormView();
