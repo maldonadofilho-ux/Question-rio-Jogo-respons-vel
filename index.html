@@ -1823,6 +1823,8 @@ function onCPFChange(inputEl) {
   const err = document.getElementById('token-err');
   if (err) err.style.display = 'none';
 }
+
+function _detectToken() {
   const params = new URLSearchParams(window.location.search);
   const tk     = params.get('token');
   if (!tk) return false;
