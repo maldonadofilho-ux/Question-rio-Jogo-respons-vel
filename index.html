@@ -2854,19 +2854,8 @@ function submitForm() {
     showSupportLinks: risk.public.showSupportLinks
   };
 
-  _saveRecord(record);
-
-  // Atualizar status do token + APP_STATE + APP_FLOW_MODE
-  if (_activeToken) {
-    _updateTokenStatus(_activeToken, 'RESPONDIDO');
-    APP_STATE.tokenStatus = 'RESPONDIDO';
-    APP_STATE.locked      = true;
-  }
-  APP_STATE.step = 'RESULT';
-
-  // Modo RESULTADO — bloqueia qualquer reabertura do questionário
-  APP_FLOW_MODE = 'RESULTADO';
-  _enterResultView(record, risk);
+  // Delegar encerramento ao ponto único de finalização
+  FINALIZE_SUBMISSION(record, risk);
 }
 
 /* ══════════════════════════════════════════════════
@@ -2881,12 +2870,39 @@ function resetForm() {
 }
 
 /* ══════════════════════════════════════════════════
-   RENDER RESULT — VISÃO DO CLIENTE (publicResult)
+   FINALIZE_SUBMISSION — ÚNICO ponto de encerramento
+   Toda submissão passa OBRIGATORIAMENTE por aqui.
+══════════════════════════════════════════════════ */
+function FINALIZE_SUBMISSION(record, risk) {
+  // 1. Persistir no back simulado
+  _saveRecord(record);
+
+  // 2. Atualizar token — inutilizável após este ponto
+  if (_activeToken) {
+    _updateTokenStatus(_activeToken, 'RESPONDIDO');
+    APP_STATE.tokenStatus = 'RESPONDIDO';
+  }
+
+  // 3. Bloquear estado global definitivamente
+  APP_STATE.locked = true;
+  APP_STATE.step   = 'RESULT';
+
+  // 4. Exibir container de resultado
+  renderOnly('RESULTADO');
+
+  // 5. Preencher conteúdo da tela de resultado
+  renderResult(record, risk);
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ══════════════════════════════════════════════════
+   RENDER RESULT — VISÃO DO CLIENTE
    Não exibe score numérico, nível técnico, flags,
    recomendações operacionais ou ações internas.
+   Em modo TOKEN: tela terminal sem botão de retorno.
 ══════════════════════════════════════════════════ */
 function renderResult(record, risk) {
-  /* lê campos diretos do record — sem wrapper publicResult */
   const tips    = record.publicTips      || risk.public.tips      || [];
   const showSUS = record.showSupportLinks != null
                     ? record.showSupportLinks
@@ -2894,7 +2910,7 @@ function renderResult(record, risk) {
   const msg     = record.publicMsg       || risk.public.message   || '';
 
   const tipsHtml = tips.map(t =>
-    `<div class="rec-item low" style="background:rgba(255,255,255,0.03); border-color:rgba(255,255,255,0.08); color:var(--text-dim)">
+    `<div class="rec-item low" style="background:rgba(255,255,255,0.03);border-color:rgba(255,255,255,0.08);color:var(--text-dim)">
       <span class="rec-icon">💡</span><span>${t}</span>
     </div>`
   ).join('');
@@ -2905,49 +2921,40 @@ function renderResult(record, risk) {
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.53 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 5.9 5.9l.96-.96a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 21.28 16v.62z"/></svg>
         📌 Recomendação de Apoio à Saúde Mental
       </div>
-      <p class="sus-block-text">
-        Caso necessite de apoio adicional, sugerimos a utilização dos serviços públicos de saúde mental disponibilizados pelo Sistema Único de Saúde (SUS), por meio dos canais abaixo:
-      </p>
+      <p class="sus-block-text">Caso necessite de apoio adicional, sugerimos a utilização dos serviços públicos de saúde mental disponibilizados pelo Sistema Único de Saúde (SUS), por meio dos canais abaixo:</p>
       <div class="sus-links">
-        <div class="sus-link-item">
-          <span>🔎</span>
-          <span><strong>Encontre um serviço de saúde:</strong><br>
-            <a href="https://meususdigital.saude.gov.br/publico/rede-saude" target="_blank" rel="noopener">https://meususdigital.saude.gov.br/publico/rede-saude</a>
-          </span>
-        </div>
-        <div class="sus-link-item">
-          <span>📞</span>
-          <span><strong>Telefone:</strong> 136 (Ouvidoria Geral do SUS)</span>
-        </div>
-        <div class="sus-link-item">
-          <span>💻</span>
-          <span><strong>Ouvidoria online (OuvidorSUS):</strong><br>
-            <a href="https://www.gov.br/saude/pt-br/canais-de-atendimento/ouvsus" target="_blank" rel="noopener">https://www.gov.br/saude/pt-br/canais-de-atendimento/ouvsus</a>
-          </span>
-        </div>
-        <div class="sus-link-item">
-          <span>🫂</span>
-          <span><strong>CVV — Centro de Valorização da Vida:</strong> ligue <strong>188</strong> (24h, gratuito)</span>
-        </div>
+        <div class="sus-link-item"><span>🔎</span><span><strong>Encontre um serviço de saúde:</strong><br><a href="https://meususdigital.saude.gov.br/publico/rede-saude" target="_blank" rel="noopener">https://meususdigital.saude.gov.br/publico/rede-saude</a></span></div>
+        <div class="sus-link-item"><span>📞</span><span><strong>Telefone:</strong> 136 (Ouvidoria Geral do SUS)</span></div>
+        <div class="sus-link-item"><span>💻</span><span><strong>Ouvidoria online (OuvidorSUS):</strong><br><a href="https://www.gov.br/saude/pt-br/canais-de-atendimento/ouvsus" target="_blank" rel="noopener">https://www.gov.br/saude/pt-br/canais-de-atendimento/ouvsus</a></span></div>
+        <div class="sus-link-item"><span>🫂</span><span><strong>CVV — Centro de Valorização da Vida:</strong> ligue <strong>188</strong> (24h, gratuito)</span></div>
       </div>
-      <p class="sus-footer-note">
-        Permanecemos à disposição para quaisquer esclarecimentos adicionais por meio de nossos canais oficiais de atendimento.
-      </p>
+      <p class="sus-footer-note">Permanecemos à disposição para quaisquer esclarecimentos adicionais por meio de nossos canais oficiais de atendimento.</p>
     </div>` : '';
 
-  document.getElementById('result-screen').innerHTML = `
-    <div class="result-header">
-      <div class="thankyou-icon" style="width:72px;height:72px;background:rgba(46,204,113,0.1);border:2px solid ${risk.color};border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-size:30px;">
-        ${risk.icon}
-      </div>
-      <h2 style="font-family:'Syne',sans-serif;font-size:clamp(22px,4vw,30px);font-weight:800;color:var(--text);margin-bottom:12px;">
-        Avaliação Concluída
-      </h2>
-      <p style="font-size:13px;color:var(--text-dim);font-family:'Syne',sans-serif;letter-spacing:1px;">
-        ${_formatDate(record.timestamp)}
-      </p>
-    </div>
+  // Botão Nova Avaliação: somente no modo admin (nunca no fluxo de token)
+  const newEvalBtn = _tokenMode ? '' : `
+    <div style="text-align:center;margin-top:8px">
+      <button class="new-eval-btn" onclick="resetForm()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4"/></svg>
+        Nova Avaliação
+      </button>
+    </div>`;
 
+  // Cabeçalho: confirmação obrigatória no modo token; header padrão no modo admin
+  const header = _tokenMode ? `
+    <div class="result-card" style="border-color:rgba(46,204,113,0.3);background:rgba(46,204,113,0.04);text-align:center;margin-bottom:20px">
+      <div style="font-size:40px;margin-bottom:14px">✅</div>
+      <h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--green);margin-bottom:8px">Obrigado por contribuir.</h2>
+      <p style="font-size:14px;color:var(--text-dim);line-height:1.7">Sua avaliação foi registrada com sucesso.</p>
+    </div>` : `
+    <div class="result-header">
+      <div class="thankyou-icon" style="width:72px;height:72px;background:rgba(46,204,113,0.1);border:2px solid ${risk.color};border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-size:30px;">${risk.icon}</div>
+      <h2 style="font-family:'Syne',sans-serif;font-size:clamp(22px,4vw,30px);font-weight:800;color:var(--text);margin-bottom:12px;">Avaliação Concluída</h2>
+      <p style="font-size:13px;color:var(--text-dim);font-family:'Syne',sans-serif;letter-spacing:1px;">${_formatDate(record.timestamp)}</p>
+    </div>`;
+
+  document.getElementById('result-screen').innerHTML = `
+    ${header}
     <div class="result-card">
       <div class="result-card-title">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
@@ -2955,7 +2962,6 @@ function renderResult(record, risk) {
       </div>
       <p class="interpretation-text">${msg}</p>
     </div>
-
     <div class="result-card">
       <div class="result-card-title">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
@@ -2963,15 +2969,8 @@ function renderResult(record, risk) {
       </div>
       <div class="recs-list">${tipsHtml}</div>
     </div>
-
     ${supportBlock}
-
-    <div style="text-align:center">
-      <button class="new-eval-btn" onclick="resetForm()">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4"/></svg>
-        Nova Avaliação
-      </button>
-    </div>
+    ${newEvalBtn}
   `;
 }
 
