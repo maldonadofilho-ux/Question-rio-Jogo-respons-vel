@@ -1754,21 +1754,70 @@ function _updateTokenStatus(tk, status) {
 /* ══════════════════════════════════════════════════
    TOKEN DETECTION — executado no init
 ══════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════
+   APP_STATE — controle de fluxo único (token mode)
+   Garante execução em ordem: TOKEN→CPF→QUIZ→RESULT
+══════════════════════════════════════════════════ */
+const APP_STATE = {
+  token:       null,
+  tokenStatus: 'ENVIADO',  // 'ENVIADO' | 'ABERTO' | 'RESPONDIDO'
+  cpf:         null,
+  clientData:  null,
+  step:        'TOKEN',     // 'TOKEN' | 'CPF' | 'QUIZ' | 'RESULT'
+  locked:      false
+};
+
+/* ══════════════════════════════════════════════════
+   MOCK_CLIENTES — base simulada de clientes
+   CPF sem pontuação (11 dígitos, apenas números)
+══════════════════════════════════════════════════ */
+const MOCK_CLIENTES = {
+  '12312312311': { idCliente: 'CLT001', nome: 'João Silva' },
+  '98765432100': { idCliente: 'CLT002', nome: 'Maria Souza' },
+};
+
+/* validação de CPF: formato + dígitos verificadores */
+function _validarCPF(cpf) {
+  const c = cpf.replace(/\D/g, '');
+  if (c.length !== 11) return false;
+  // bloquear sequências iguais (inclui 11111111111 conforme spec)
+  if (/^(\d)\1{10}$/.test(c)) return false;
+  let s = 0;
+  for (let i = 0; i < 9; i++) s += +c[i] * (10 - i);
+  let r = (s * 10) % 11; if (r >= 10) r = 0;
+  if (r !== +c[9]) return false;
+  s = 0;
+  for (let i = 0; i < 10; i++) s += +c[i] * (11 - i);
+  r = (s * 10) % 11; if (r >= 10) r = 0;
+  return r === +c[10];
+}
+
 function _detectToken() {
   const params = new URLSearchParams(window.location.search);
   const tk     = params.get('token');
   if (!tk) return false;
+
+  // Atualizar APP_STATE
+  APP_STATE.token = tk;
+  APP_STATE.step  = 'CPF';
 
   _tokenMode   = true;
   _activeToken = tk;
 
   // Marcar como ABERTO se ainda ENVIADO
   const t = _getToken(tk);
-  if (t && t.status === 'ENVIADO') _updateTokenStatus(tk, 'ABERTO');
+  if (t) {
+    APP_STATE.tokenStatus = t.status;
+    if (t.status === 'ENVIADO') {
+      _updateTokenStatus(tk, 'ABERTO');
+      APP_STATE.tokenStatus = 'ABERTO';
+    }
+  }
 
-  // Verificar se já foi respondido
+  // Verificar RESPONDIDO — bloqueio permanente
   const alreadyAnswered = submissions.some(s => s.token === tk);
-  if (alreadyAnswered) {
+  if (alreadyAnswered || APP_STATE.tokenStatus === 'RESPONDIDO') {
+    APP_STATE.locked = true;
     const sub = submissions.find(s => s.token === tk);
     const dateStr = sub ? _formatDate(sub.timestamp) : '';
     document.getElementById('token-blocked-date').textContent =
@@ -1777,24 +1826,54 @@ function _detectToken() {
     return true;
   }
 
-  // Exibir tela de entrada (CPF + aceite)
+  // Exibir tela CPF
   document.getElementById('token-screen').classList.add('visible');
   return true;
 }
 
 /* ══════════════════════════════════════════════════
-   TOKEN QUIZ — iniciar após CPF + aceite
+   TOKEN QUIZ — state machine obrigatória
+   ORDEM FIXA: validar CPF → lookup MOCK → set data → quiz
 ══════════════════════════════════════════════════ */
 function _startTokenQuiz() {
-  const cpf    = document.getElementById('token-cpf-input').value.trim();
+  // Bloquear se step incorreto ou locked
+  if (APP_STATE.step !== 'CPF' || APP_STATE.locked) return;
+
+  const rawCpf = document.getElementById('token-cpf-input').value.trim();
   const aceite = document.getElementById('token-accept-chk').checked;
   const err    = document.getElementById('token-err');
-  if (cpf.length < 14 || !aceite) { err.style.display = 'block'; return; }
+
+  // ETAPA 1 — Validar CPF (formato + dígito verificador)
+  const cpfNums = rawCpf.replace(/\D/g, '');
+  if (!_validarCPF(cpfNums) || !aceite) {
+    err.textContent = !aceite
+      ? 'Aceite os termos para continuar.'
+      : 'CPF inválido. Verifique e tente novamente.';
+    err.style.display = 'block';
+    return;
+  }
   err.style.display = 'none';
 
-  _authRole   = 'client';
-  _clientData = { idCliente: '', nome: '', cpf };
+  // ETAPA 2 — Consultar MOCK_CLIENTES
+  const cliente = MOCK_CLIENTES[cpfNums] || null;
 
+  // ETAPA 3 — Definir clientData (ou bloquear se inválido)
+  if (!cliente) {
+    err.textContent = 'Cliente não possui cadastro na plataforma.';
+    err.style.display = 'block';
+    // NÃO avançar step para QUIZ
+    return;
+  }
+
+  // Cliente válido — atualizar APP_STATE e _clientData
+  APP_STATE.cpf        = cpfNums;
+  APP_STATE.clientData = { cpf: cpfNums, idCliente: cliente.idCliente, nome: cliente.nome };
+  APP_STATE.step       = 'QUIZ';
+
+  _authRole   = 'client';
+  _clientData = APP_STATE.clientData;
+
+  // ETAPA 4 — Liberar quiz
   document.getElementById('token-screen').classList.remove('visible');
   hideAllScreens();
   _enterFormView();
@@ -2668,8 +2747,13 @@ function submitForm() {
 
   _saveRecord(record);
 
-  // Atualizar status do token para RESPONDIDO
-  if (_activeToken) _updateTokenStatus(_activeToken, 'RESPONDIDO');
+  // Atualizar status do token para RESPONDIDO + APP_STATE
+  if (_activeToken) {
+    _updateTokenStatus(_activeToken, 'RESPONDIDO');
+    APP_STATE.tokenStatus = 'RESPONDIDO';
+    APP_STATE.locked      = true;
+  }
+  APP_STATE.step = 'RESULT';
 
   _enterResultView(record, risk);
 }
