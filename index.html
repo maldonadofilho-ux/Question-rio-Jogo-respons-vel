@@ -1264,6 +1264,202 @@
   .confirm-modal-text { font-size: 13px; color: var(--text-dim); line-height: 1.7; margin-bottom: 18px; }
   .confirm-modal-btns { display: flex; gap: 10px; }
 
+  /* sim-send inline forms */
+  .sim-send-form {
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+    padding: 14px 16px;
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-top: 10px;
+    animation: fadeUp .25s ease both;
+  }
+  .sim-send-form.open { display: flex; }
+  .sim-send-form input {
+    background: var(--dark3);
+    border: 1.5px solid rgba(255,255,255,.08);
+    border-radius: 10px;
+    padding: 10px 14px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color .2s;
+  }
+  .sim-send-form input:focus { border-color: var(--gold); }
+  .sim-send-success {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    background: rgba(46,204,113,.08);
+    border: 1px solid rgba(46,204,113,.25);
+    border-radius: 10px;
+    font-size: 13px;
+    color: var(--green);
+    margin-top: 6px;
+  }
+  .sim-send-success.visible { display: flex; }
+  .sim-action-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+  .sim-btn {
+    background: transparent;
+    border: 1.5px solid var(--border);
+    color: var(--text-dim);
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 9px 16px;
+    border-radius: 99px;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .sim-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .sim-btn.confirm {
+    background: var(--gold);
+    color: var(--dark);
+    border-color: var(--gold);
+  }
+  .sim-btn.confirm:hover { background: #fff; border-color: #fff; }
+
+  /* ── TOKEN FLOW ── */
+  .token-screen-wrap { display:none; }
+  .token-screen-wrap.visible { display:block; }
+
+  .token-card {
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px;
+    max-width: 480px;
+    margin: 0 auto;
+    animation: fadeUp .5s ease both;
+  }
+  .token-card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 18px;
+  }
+  .token-accept-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    background: var(--dark3);
+    border: 1.5px solid rgba(255,255,255,.08);
+    border-radius: 12px;
+    margin-bottom: 18px;
+    cursor: pointer;
+  }
+  .token-accept-row input[type=checkbox] {
+    width: 18px; height: 18px;
+    accent-color: var(--gold);
+    flex-shrink: 0;
+    margin-top: 1px;
+    cursor: pointer;
+  }
+  .token-accept-text { font-size: 13px; color: var(--text-dim); line-height: 1.6; }
+  .token-err { font-size: 12px; color: var(--red); margin-bottom: 12px; display: none; }
+
+  /* blocked screen */
+  .token-blocked-card {
+    background: var(--dark2);
+    border: 1px solid rgba(239,68,68,.25);
+    border-radius: 20px;
+    padding: 40px 32px;
+    max-width: 480px;
+    margin: 60px auto;
+    text-align: center;
+    animation: fadeUp .5s ease both;
+  }
+  .token-blocked-icon { font-size: 48px; margin-bottom: 20px; }
+  .token-blocked-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+  .token-blocked-sub { font-size: 14px; color: var(--text-dim); line-height: 1.7; }
+  .token-blocked-date { margin-top: 16px; font-size: 12px; color: var(--text-dim); font-family: 'Syne', sans-serif; }
+
+  /* link generator panel (inside dashboard) */
+  .link-gen-panel {
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px;
+    margin-bottom: 20px;
+  }
+  .link-gen-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+  }
+  .link-gen-row { display: flex; gap: 8px; align-items: center; margin-bottom: 14px; }
+  .link-gen-input {
+    flex: 1;
+    background: var(--dark2);
+    border: 1.5px solid rgba(255,255,255,.08);
+    border-radius: 10px;
+    padding: 10px 14px;
+    color: var(--text);
+    font-family: monospace;
+    font-size: 12px;
+    outline: none;
+  }
+  .link-copy-btn {
+    background: var(--gold);
+    color: var(--dark);
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 11px;
+    letter-spacing: 1px;
+    padding: 10px 18px;
+    border-radius: 99px;
+    border: none;
+    cursor: pointer;
+    transition: all .2s;
+    white-space: nowrap;
+  }
+  .link-copy-btn:hover { background: #fff; }
+  .link-gen-btn {
+    background: transparent;
+    border: 1.5px solid var(--border);
+    color: var(--text-dim);
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    border-radius: 99px;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .link-gen-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* token status chips */
+  .chip-enviado  { display:inline-flex;padding:3px 9px;border-radius:99px;font-family:'Syne',sans-serif;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:rgba(59,130,246,.1);color:#60a5fa;border:1px solid rgba(59,130,246,.3); }
+  .chip-aberto   { display:inline-flex;padding:3px 9px;border-radius:99px;font-family:'Syne',sans-serif;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:rgba(234,179,8,.1);color:#eab308;border:1px solid rgba(234,179,8,.3); }
+  .chip-respondido { display:inline-flex;padding:3px 9px;border-radius:99px;font-family:'Syne',sans-serif;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:rgba(46,204,113,.1);color:#2ecc71;border:1px solid rgba(46,204,113,.3); }
+
   /* ── RESPONSIVE ── */
   @media (max-width: 480px) {
     .question-card { padding: 22px 18px 18px; }
@@ -1358,6 +1554,46 @@
     <div class="confirm-modal-btns">
       <button class="id-btn-ghost" style="flex:1" onclick="_closeClearModal()">Cancelar</button>
       <button class="id-btn-primary" style="flex:1;background:var(--red)" onclick="_doClear()">Apagar Tudo</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ TOKEN ENTRY SCREEN ══════════════════ -->
+<div class="login-screen-wrap" id="token-screen">
+  <div class="login-center">
+    <div style="width:100%;max-width:480px">
+      <div style="text-align:center;margin-bottom:28px">
+        <div class="logo-badge"><div class="dot"></div><span>Ultra Bet</span></div>
+        <div class="login-title">Avaliação de Jogo Responsável</div>
+        <div class="login-sub">Preencha seus dados para iniciar o questionário.</div>
+      </div>
+      <div class="token-card">
+        <div class="token-card-title">👤 Identificação</div>
+        <div class="id-field">
+          <label>CPF</label>
+          <input type="text" id="token-cpf-input" placeholder="000.000.000-00"
+                 maxlength="14" oninput="_fmtCPF(this)"
+                 onkeydown="if(event.key==='Enter') _startTokenQuiz()">
+        </div>
+        <label class="token-accept-row" for="token-accept-chk">
+          <input type="checkbox" id="token-accept-chk">
+          <span class="token-accept-text">Li e concordo com os <strong style="color:var(--text)">Termos de Uso</strong> e <strong style="color:var(--text)">Política de Privacidade</strong>. Autorizo o tratamento dos meus dados para fins de avaliação de Jogo Responsável, em conformidade com a LGPD.</span>
+        </label>
+        <div class="token-err" id="token-err">Preencha o CPF corretamente e aceite os termos.</div>
+        <button class="id-btn-primary" style="width:100%" onclick="_startTokenQuiz()">Iniciar Questionário →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ TOKEN BLOCKED SCREEN ══════════════════ -->
+<div class="login-screen-wrap" id="token-blocked-screen">
+  <div class="login-center">
+    <div class="token-blocked-card">
+      <div class="token-blocked-icon">🔒</div>
+      <div class="token-blocked-title">Este questionário já foi respondido.</div>
+      <div class="token-blocked-sub">O link que você acessou é de uso único e já foi utilizado. Entre em contato com a plataforma caso precise realizar uma nova avaliação.</div>
+      <div class="token-blocked-date" id="token-blocked-date"></div>
     </div>
   </div>
 </div>
@@ -1478,6 +1714,7 @@ const _ADMIN_PWD      = 'Ultra@246810jr!!!';
 const _VIEW_PWD       = 'view2026';
 const _HIST_KEY       = '_ub_jr_hist_v2';
 const _LOG_KEY        = '_ub_jr_log_v1';
+const _TOKENS_KEY     = '_ub_jr_tokens_v1';
 const _HIST_PAGE_SIZE = 20;
 
 /* ── BASE ÚNICA DE SUBMISSÕES ───────────────────────
@@ -1490,6 +1727,186 @@ let submissions = [];
 let _authRole     = '';       // 'admin' | 'view' | 'client' | ''
 let _selectedRole = 'admin';  // seleção na tela de login
 let _clientData   = {};       // { idCliente, nome, cpf }
+
+/* ── TOKEN MODE ─────────────────────────────────────
+   Ativado quando a URL contém ?token=XXXX
+   Isola completamente o fluxo do cliente.
+─────────────────────────────────────────────────── */
+let _tokenMode   = false;
+let _activeToken = '';
+
+/* ══════════════════════════════════════════════════
+   TOKEN STORAGE
+══════════════════════════════════════════════════ */
+function _loadTokens() {
+  try { const r = localStorage.getItem(_TOKENS_KEY); return r ? JSON.parse(r) : []; } catch(e) { return []; }
+}
+function _saveTokens(tokens) {
+  try { localStorage.setItem(_TOKENS_KEY, JSON.stringify(tokens)); } catch(e) {}
+}
+function _getToken(tk) { return _loadTokens().find(t => t.token === tk) || null; }
+function _updateTokenStatus(tk, status) {
+  const tokens = _loadTokens();
+  const t = tokens.find(x => x.token === tk);
+  if (t) { t.status = status; _saveTokens(tokens); }
+}
+
+/* ══════════════════════════════════════════════════
+   TOKEN DETECTION — executado no init
+══════════════════════════════════════════════════ */
+function _detectToken() {
+  const params = new URLSearchParams(window.location.search);
+  const tk     = params.get('token');
+  if (!tk) return false;
+
+  _tokenMode   = true;
+  _activeToken = tk;
+
+  // Marcar como ABERTO se ainda ENVIADO
+  const t = _getToken(tk);
+  if (t && t.status === 'ENVIADO') _updateTokenStatus(tk, 'ABERTO');
+
+  // Verificar se já foi respondido
+  const alreadyAnswered = submissions.some(s => s.token === tk);
+  if (alreadyAnswered) {
+    const sub = submissions.find(s => s.token === tk);
+    const dateStr = sub ? _formatDate(sub.timestamp) : '';
+    document.getElementById('token-blocked-date').textContent =
+      dateStr ? 'Respondido em: ' + dateStr : '';
+    document.getElementById('token-blocked-screen').classList.add('visible');
+    return true;
+  }
+
+  // Exibir tela de entrada (CPF + aceite)
+  document.getElementById('token-screen').classList.add('visible');
+  return true;
+}
+
+/* ══════════════════════════════════════════════════
+   TOKEN QUIZ — iniciar após CPF + aceite
+══════════════════════════════════════════════════ */
+function _startTokenQuiz() {
+  const cpf    = document.getElementById('token-cpf-input').value.trim();
+  const aceite = document.getElementById('token-accept-chk').checked;
+  const err    = document.getElementById('token-err');
+  if (cpf.length < 14 || !aceite) { err.style.display = 'block'; return; }
+  err.style.display = 'none';
+
+  _authRole   = 'client';
+  _clientData = { idCliente: '', nome: '', cpf };
+
+  document.getElementById('token-screen').classList.remove('visible');
+  hideAllScreens();
+  _enterFormView();
+}
+
+/* ══════════════════════════════════════════════════
+   LINK GENERATION (admin)
+══════════════════════════════════════════════════ */
+function _generateLink() {
+  const token = 'TK-' + Date.now().toString(36).toUpperCase() + '-' +
+                Math.random().toString(36).substr(2, 6).toUpperCase();
+  const tokens = _loadTokens();
+  tokens.unshift({ token, status: 'ENVIADO', createdAt: new Date().toISOString() });
+  _saveTokens(tokens);
+  _addLog('VIEW', `Link gerado: token ${token}`);
+
+  const base = window.location.href.split('?')[0];
+  const url  = base + '?token=' + token;
+
+  // Atualizar campo de link
+  const inp = document.getElementById('generated-link-input');
+  if (inp) inp.value = url;
+
+  // Exibir painel de ações (campo + botões)
+  const panel = document.getElementById('link-gen-result');
+  if (panel) panel.style.display = 'block';
+
+  // Fechar formulários de simulação anteriores
+  ['sim-email-form','sim-sms-form'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('open');
+  });
+  ['sim-email-ok','sim-sms-ok'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('visible');
+  });
+
+  // Atualizar contadores na lista SEM rerrenderizar todo o dashboard
+  _refreshTokenList();
+}
+
+function _refreshTokenList() {
+  const wrap = document.getElementById('token-list-wrap');
+  if (!wrap) return;
+  const tokensList = _loadTokens();
+  const tkStats = { ENVIADO:0, ABERTO:0, RESPONDIDO:0 };
+  tokensList.forEach(t => { if (tkStats[t.status]!==undefined) tkStats[t.status]++; });
+  wrap.innerHTML = tokensList.length === 0 ? '' : `
+    <div style="margin-top:14px">
+      <div style="font-family:'Syne',sans-serif;font-size:10px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">Links gerados (${tokensList.length})</div>
+      <div style="display:flex;gap:8px;margin-bottom:12px">
+        <span class="chip-enviado">ENVIADO ${tkStats.ENVIADO}</span>
+        <span class="chip-aberto">ABERTO ${tkStats.ABERTO}</span>
+        <span class="chip-respondido">RESPONDIDO ${tkStats.RESPONDIDO}</span>
+      </div>
+      <div style="max-height:160px;overflow-y:auto">
+        ${tokensList.slice(0,10).map(t => `
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:var(--dark2);border-radius:8px;margin-bottom:6px">
+            <span style="font-family:monospace;font-size:11px;color:var(--text-dim)">${t.token}</span>
+            <div style="display:flex;align-items:center;gap:8px">
+              <span class="chip-${t.status.toLowerCase()}">${t.status}</span>
+              <span style="font-size:10px;color:var(--text-dim)">${_formatDate(t.createdAt)}</span>
+            </div>
+          </div>`).join('')}
+      </div>
+    </div>`;
+}
+
+function _copyLink() {
+  const inp = document.getElementById('generated-link-input');
+  const btn = document.getElementById('copy-link-btn');
+  navigator.clipboard.writeText(inp.value).then(() => {
+    btn.textContent = '✓ Copiado';
+    btn.style.background = '#2ECC71';
+    setTimeout(() => { btn.textContent = '📋 Copiar'; btn.style.background = ''; }, 2000);
+  }).catch(() => { inp.select(); document.execCommand('copy'); });
+}
+
+/* ── Simulação de envio ── */
+function _simSendEmail() {
+  document.getElementById('sim-sms-form').classList.remove('open');
+  document.getElementById('sim-email-form').classList.toggle('open');
+}
+
+function _simSendSMS() {
+  document.getElementById('sim-email-form').classList.remove('open');
+  const form = document.getElementById('sim-sms-form');
+  form.classList.toggle('open');
+}
+
+function _fmtPhone(el) {
+  let v = el.value.replace(/\D/g,'');
+  if (v.length > 2)  v = '(' + v.slice(0,2) + ') ' + v.slice(2);
+  if (v.length > 10) v = v.slice(0,10) + '-' + v.slice(10);
+  el.value = v;
+}
+
+function _simConfirm(type) {
+  const formId = type === 'email' ? 'sim-email-form' : 'sim-sms-form';
+  const okId   = type === 'email' ? 'sim-email-ok'   : 'sim-sms-ok';
+  const fieldId = type === 'email' ? 'sim-email-field' : 'sim-sms-field';
+  const val = (document.getElementById(fieldId) || {value:''}).value.trim();
+  if (!val) return;
+  document.getElementById(formId).classList.remove('open');
+  document.getElementById(okId).classList.add('visible');
+  // Não persistir e-mail/telefone — apenas feedback visual
+}
+
+function _simCancel(type) {
+  const formId = type === 'email' ? 'sim-email-form' : 'sim-sms-form';
+  document.getElementById(formId).classList.remove('open');
+}
 
 /* ── Utilitários de login/identificação ── */
 function _selRole(r) {
@@ -1695,7 +2112,76 @@ function renderDashboard() {
       <div class="dash-level-pct">${pct(byLevel[lc.key])}</div>
     </div>`).join('');
 
-  document.getElementById('dashboard-content').innerHTML = `
+  const tokensList = _loadTokens();
+  const tkStats = { ENVIADO: 0, ABERTO: 0, RESPONDIDO: 0 };
+  tokensList.forEach(t => { if (tkStats[t.status] !== undefined) tkStats[t.status]++; });
+
+  const linkGenPanel = _authRole === 'admin' ? `
+    <div class="link-gen-panel">
+      <div class="link-gen-title">🔗 Gerar Link de Questionário</div>
+      <div style="display:flex;gap:8px;margin-bottom:14px">
+        <button class="link-gen-btn" onclick="_generateLink()">+ Gerar novo link</button>
+      </div>
+
+      <!-- Painel de ações — aparece após geração -->
+      <div id="link-gen-result" style="display:none">
+        <!-- Campo do link + copiar -->
+        <div class="link-gen-row" style="margin-bottom:10px">
+          <input class="link-gen-input" id="generated-link-input" type="text" readonly>
+          <button class="link-copy-btn" id="copy-link-btn" onclick="_copyLink()">📋 Copiar</button>
+        </div>
+        <!-- Botões de simulação de envio -->
+        <div class="sim-action-row">
+          <button class="sim-btn" onclick="_simSendEmail()">✉️ Simular e-mail</button>
+          <button class="sim-btn" onclick="_simSendSMS()">📱 Simular SMS</button>
+        </div>
+        <!-- Form inline: e-mail -->
+        <div class="sim-send-form" id="sim-email-form">
+          <label style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim)">E-mail destinatário</label>
+          <input type="email" id="sim-email-field" placeholder="exemplo@email.com">
+          <div style="display:flex;gap:8px">
+            <button class="sim-btn confirm" onclick="_simConfirm('email')">Simular envio</button>
+            <button class="sim-btn" onclick="_simCancel('email')">Cancelar</button>
+          </div>
+        </div>
+        <div class="sim-send-success" id="sim-email-ok">✅ E-mail simulado enviado com sucesso.</div>
+        <!-- Form inline: SMS -->
+        <div class="sim-send-form" id="sim-sms-form">
+          <label style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim)">Telefone destinatário</label>
+          <input type="tel" id="sim-sms-field" placeholder="(00) 00000-0000" maxlength="15" oninput="_fmtPhone(this)">
+          <div style="display:flex;gap:8px">
+            <button class="sim-btn confirm" onclick="_simConfirm('sms')">Simular envio</button>
+            <button class="sim-btn" onclick="_simCancel('sms')">Cancelar</button>
+          </div>
+        </div>
+        <div class="sim-send-success" id="sim-sms-ok">✅ SMS simulado enviado com sucesso.</div>
+      </div>
+
+      <!-- Lista de tokens (atualizada via _refreshTokenList) -->
+      <div id="token-list-wrap">
+        ${tokensList.length > 0 ? `
+        <div style="margin-top:14px">
+          <div style="font-family:'Syne',sans-serif;font-size:10px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">Links gerados (${tokensList.length})</div>
+          <div style="display:flex;gap:8px;margin-bottom:12px">
+            <span class="chip-enviado">ENVIADO ${tkStats.ENVIADO}</span>
+            <span class="chip-aberto">ABERTO ${tkStats.ABERTO}</span>
+            <span class="chip-respondido">RESPONDIDO ${tkStats.RESPONDIDO}</span>
+          </div>
+          <div style="max-height:160px;overflow-y:auto">
+            ${tokensList.slice(0,10).map(t => `
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:var(--dark2);border-radius:8px;margin-bottom:6px">
+                <span style="font-family:monospace;font-size:11px;color:var(--text-dim)">${t.token}</span>
+                <div style="display:flex;align-items:center;gap:8px">
+                  <span class="chip-${t.status.toLowerCase()}">${t.status}</span>
+                  <span style="font-size:10px;color:var(--text-dim)">${_formatDate(t.createdAt)}</span>
+                </div>
+              </div>`).join('')}
+          </div>
+        </div>` : ''}
+      </div>
+    </div>` : '';
+
+  document.getElementById('dashboard-content').innerHTML = linkGenPanel + `
     <div class="dash-kpi-grid">
       <div class="dash-kpi">
         <div class="dash-kpi-val" style="color:var(--gold)">${total}</div>
@@ -2165,23 +2651,26 @@ function submitForm() {
     cpf:         _clientData.cpf       || '',
     tentativa,
     tipo:        tentativa === 1 ? 'Primeira' : 'Reavaliação',
-    // resultado (campos diretos — fonte única para histórico, dashboard e export)
+    // token (preenchido apenas no modo link)
+    token:       _activeToken || '',
+    // resultado
     score:       total,
     nivel:       risk.key,
     nivelLabel:  risk.label,
-    // respostas completas
     answers:     answersArr,
-    // dados internos (compliance — nunca exibidos ao cliente)
     interpretacao:   risk.internal.interpretation,
     recomendacoes:   risk.internal.recommendations.map(r => r.text),
     flags:           risk.internal.flags,
-    // dados públicos (exibidos ao cliente)
     publicMsg:       risk.public.message,
     publicTips:      risk.public.tips,
     showSupportLinks: risk.public.showSupportLinks
   };
 
   _saveRecord(record);
+
+  // Atualizar status do token para RESPONDIDO
+  if (_activeToken) _updateTokenStatus(_activeToken, 'RESPONDIDO');
+
   _enterResultView(record, risk);
 }
 
@@ -2373,6 +2862,15 @@ function renderHistory() {
     const rows = page.map(s => {
       const r         = _getRisk(s.score || 0);
       const chipClass = (s.tipo === 'Primeira') ? 'chip-first' : 'chip-reeval';
+      const tokenCell = s.token
+        ? `<span style="font-family:monospace;font-size:10px;color:var(--text-dim)">${s.token}</span>`
+        : `<span style="color:var(--text-dim);opacity:.4">—</span>`;
+      const tkObj   = s.token ? _getToken(s.token) : null;
+      const tkStatus = tkObj ? tkObj.status : (s.token ? 'RESPONDIDO' : '—');
+      const tkChip   = tkStatus === 'RESPONDIDO' ? `<span class="chip-respondido">${tkStatus}</span>`
+                     : tkStatus === 'ABERTO'      ? `<span class="chip-aberto">${tkStatus}</span>`
+                     : tkStatus === 'ENVIADO'     ? `<span class="chip-enviado">${tkStatus}</span>`
+                     : `<span style="color:var(--text-dim);opacity:.4">—</span>`;
       return `<tr onclick="openModal('${s.id}')" title="Clique para detalhes">
         <td style="color:var(--text);font-family:'Syne',sans-serif;font-size:11px">${s.idCliente || '—'}</td>
         <td style="color:var(--text)">${s.nome || '—'}</td>
@@ -2382,6 +2880,8 @@ function renderHistory() {
         <td><span class="risk-badge-sm ${s.nivel || 'low'}">${s.nivelLabel || '—'}</span></td>
         <td><span class="${chipClass}">${s.tipo || '—'}</span></td>
         <td style="text-align:center;color:var(--text-dim)">${s.tentativa || 1}</td>
+        <td>${tokenCell}</td>
+        <td>${tkChip}</td>
       </tr>`;
     }).join('');
 
@@ -2391,6 +2891,7 @@ function renderHistory() {
           <thead><tr>
             <th>ID Cliente</th><th>Nome</th><th>CPF</th><th>Data</th>
             <th>Score</th><th>Nível</th><th>Tipo</th><th>#</th>
+            <th>Token</th><th>Status</th>
           </tr></thead>
           <tbody>${rows}</tbody>
         </table>
@@ -2581,9 +3082,16 @@ function showTab(tab) {
 /* ══════════════════════════════════════════════════
    INIT
 ══════════════════════════════════════════════════ */
-// Estado inicial limpo: tudo oculto, login overlay visível
+// 1. Carregar submissions[] do localStorage
+_initSubmissions();
+
+// 2. Tudo oculto
 hideAllScreens();
-// (login-screen já começa com classe 'visible' no HTML)
+
+// 3. Detectar modo token (URL com ?token=)
+//    Se detectado, exibe tela adequada e encerra.
+//    Caso contrário, login-screen já começa 'visible' no HTML.
+_detectToken();
 </script>
 </body>
 </html>
