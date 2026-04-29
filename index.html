@@ -1736,6 +1736,46 @@ let _tokenMode   = false;
 let _activeToken = '';
 
 /* ══════════════════════════════════════════════════
+   APP_FLOW_MODE — máquina de estados central
+   "ADMIN"        → acesso via login (sem token)
+   "TOKEN_CLIENT" → acesso via link com ?token=
+   "QUESTIONARIO" → quiz ativo
+   "RESULTADO"    → questionário finalizado
+   "BLOQUEADO"    → token já respondido
+══════════════════════════════════════════════════ */
+let APP_FLOW_MODE = 'ADMIN';
+
+/* renderOnly — garante que SOMENTE a tela do modo atual esteja visível */
+function renderOnly(mode) {
+  APP_FLOW_MODE = mode;
+
+  // 1. Esconder TODAS as telas e overlays
+  hideAllScreens();
+  ['login-screen','id-screen','token-screen','token-blocked-screen'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('visible');
+  });
+  document.getElementById('app-top-bar').classList.remove('visible');
+  document.getElementById('nav-tabs-wrap').style.display = 'none';
+
+  // 2. Exibir SOMENTE a tela do modo
+  if (mode === 'ADMIN') {
+    document.getElementById('login-screen').classList.add('visible');
+  } else if (mode === 'TOKEN_CLIENT') {
+    document.getElementById('token-screen').classList.add('visible');
+  } else if (mode === 'QUESTIONARIO') {
+    document.getElementById('screen-form').style.display  = 'block';
+    document.getElementById('form-wrap').style.display    = 'block';
+  } else if (mode === 'RESULTADO') {
+    document.getElementById('screen-form').style.display = 'block';
+    const rs = document.getElementById('result-screen');
+    if (rs) { rs.style.display = 'block'; rs.classList.add('visible'); }
+  } else if (mode === 'BLOQUEADO') {
+    document.getElementById('token-blocked-screen').classList.add('visible');
+  }
+}
+
+/* ══════════════════════════════════════════════════
    TOKEN STORAGE
 ══════════════════════════════════════════════════ */
 function _loadTokens() {
@@ -1829,12 +1869,11 @@ function _detectToken() {
   const tk     = params.get('token');
   if (!tk) return false;
 
-  // Atualizar APP_STATE
-  APP_STATE.token = tk;
-  APP_STATE.step  = 'CPF';
-
   _tokenMode   = true;
   _activeToken = tk;
+
+  APP_STATE.token = tk;
+  APP_STATE.step  = 'CPF';
 
   // Marcar como ABERTO se ainda ENVIADO
   const t = _getToken(tk);
@@ -1854,12 +1893,12 @@ function _detectToken() {
     const dateStr = sub ? _formatDate(sub.timestamp) : '';
     document.getElementById('token-blocked-date').textContent =
       dateStr ? 'Respondido em: ' + dateStr : '';
-    document.getElementById('token-blocked-screen').classList.add('visible');
+    renderOnly('BLOQUEADO');
     return true;
   }
 
-  // Exibir tela CPF
-  document.getElementById('token-screen').classList.add('visible');
+  // Exibir tela CPF — modo TOKEN_CLIENT
+  renderOnly('TOKEN_CLIENT');
   return true;
 }
 
@@ -1929,9 +1968,13 @@ function _startTokenQuiz() {
   _authRole   = 'client';
   _clientData = APP_STATE.clientData;
 
-  document.getElementById('token-screen').classList.remove('visible');
-  hideAllScreens();
-  _enterFormView();
+  // Iniciar questionário — modo QUESTIONARIO
+  Object.keys(_answers).forEach(k => delete _answers[k]);
+  _currentQ = 0;
+  document.getElementById('progress-fill').style.width = '0%';
+  document.getElementById('progress-text').textContent = '1 / 15';
+  renderOnly('QUESTIONARIO');
+  buildQuestions();
 }
 
 /* ══════════════════════════════════════════════════
@@ -2082,6 +2125,7 @@ function _doLogin() {
 }
 
 function _hideLoginShowApp() {
+  APP_FLOW_MODE = 'ADMIN';
   document.getElementById('login-screen').classList.remove('visible');
   hideAllScreens();
   // Mostrar top-bar e nav-tabs para admin/view
@@ -2090,7 +2134,6 @@ function _hideLoginShowApp() {
   document.getElementById('top-bar-role-label').textContent =
     _authRole === 'admin' ? '🔐 Administrador' : '👁 Analista (somente leitura)';
   document.getElementById('nav-tabs-wrap').style.display = 'flex';
-  // Ir para Histórico como tela inicial para gestor
   showTab('history');
 }
 
@@ -2130,13 +2173,24 @@ function hideAllScreens() {
 }
 
 function _cancelQuiz() {
+  // No modo TOKEN_CLIENT: nunca voltar para telas de admin ou id-screen
+  if (APP_FLOW_MODE === 'QUESTIONARIO' && _tokenMode) {
+    // Cancelar no fluxo de token: voltar para tela CPF para nova tentativa
+    // (somente se ainda não respondido — se respondido, vai para resultado)
+    if (APP_STATE.locked) {
+      renderOnly('RESULTADO');
+    } else {
+      APP_STATE.step = 'CPF';
+      renderOnly('TOKEN_CLIENT');
+    }
+    return;
+  }
+  // Modo ADMIN: comportamento original
   hideAllScreens();
-  _enterFormView(); // zera estado do quiz
+  _enterFormView();
   if (_authRole === 'admin' || _authRole === 'view') {
-    // Gestor: volta para o painel administrativo
     showTab('history');
   } else {
-    // Cliente: volta para tela de identificação
     _clientData = {};
     document.getElementById('id-cpf-input').value  = '';
     document.getElementById('id-nome-input').value = '';
@@ -2802,7 +2856,7 @@ function submitForm() {
 
   _saveRecord(record);
 
-  // Atualizar status do token para RESPONDIDO + APP_STATE
+  // Atualizar status do token + APP_STATE + APP_FLOW_MODE
   if (_activeToken) {
     _updateTokenStatus(_activeToken, 'RESPONDIDO');
     APP_STATE.tokenStatus = 'RESPONDIDO';
@@ -2810,13 +2864,19 @@ function submitForm() {
   }
   APP_STATE.step = 'RESULT';
 
+  // Modo RESULTADO — bloqueia qualquer reabertura do questionário
+  APP_FLOW_MODE = 'RESULTADO';
   _enterResultView(record, risk);
 }
 
 /* ══════════════════════════════════════════════════
    RESET — public entry point for "Nova Avaliação"
+   Bloqueado em modo TOKEN_CLIENT após submissão.
 ══════════════════════════════════════════════════ */
 function resetForm() {
+  // No modo TOKEN_CLIENT após submissão: nunca reabrir o questionário
+  if (APP_FLOW_MODE === 'RESULTADO' && _tokenMode) return;
+  if (APP_FLOW_MODE === 'BLOQUEADO') return;
   _enterFormView();
 }
 
