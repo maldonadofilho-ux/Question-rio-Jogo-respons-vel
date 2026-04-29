@@ -842,6 +842,428 @@
     line-height: 1.6;
   }
 
+  /* ── LOGIN ── */
+  .login-screen-wrap {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: var(--dark);
+    z-index: 200;
+    overflow-y: auto;
+  }
+  .login-screen-wrap.visible { display: block; }
+  .login-center {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+  .login-box {
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 36px;
+    width: 100%;
+    max-width: 420px;
+  }
+  .login-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .login-sub {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-bottom: 24px;
+  }
+  .login-role-row {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 20px;
+  }
+  .role-pill {
+    flex: 1;
+    padding: 10px 8px;
+    border-radius: 10px;
+    border: 1.5px solid rgba(255,255,255,0.08);
+    background: var(--dark3);
+    color: var(--text-dim);
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+  .role-pill.active {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: rgba(245,200,66,0.06);
+  }
+  .login-field label {
+    display: block;
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+  }
+  .login-field input {
+    width: 100%;
+    background: var(--dark3);
+    border: 1.5px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 13px 16px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s;
+    margin-bottom: 16px;
+  }
+  .login-field input:focus { border-color: var(--gold); }
+  .login-err {
+    font-size: 12px;
+    color: var(--red);
+    margin-bottom: 12px;
+    display: none;
+  }
+  .login-btn {
+    width: 100%;
+    background: var(--gold);
+    color: var(--dark);
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 14px;
+    border-radius: 99px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.22s;
+  }
+  .login-btn:hover { background: #fff; transform: translateY(-1px); box-shadow: 0 10px 32px rgba(245,200,66,0.25); }
+
+  /* ── IDENTIFICAÇÃO ── */
+  .id-screen-wrap {
+    display: none;
+  }
+  .id-screen-wrap.visible { display: block; }
+  .id-card {
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px;
+    margin-bottom: 20px;
+    animation: fadeUp 0.5s ease both;
+  }
+  .id-card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 18px;
+  }
+  .id-field { margin-bottom: 16px; }
+  .id-field label {
+    display: block;
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 7px;
+  }
+  .id-field input {
+    width: 100%;
+    background: var(--dark3);
+    border: 1.5px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 13px 16px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .id-field input:focus { border-color: var(--gold); }
+  .id-err { font-size: 12px; color: var(--red); margin-bottom: 12px; display: none; }
+  .id-btn-row { display: flex; gap: 10px; }
+  .id-btn-primary {
+    flex: 1;
+    background: var(--gold);
+    color: var(--dark);
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 14px 24px;
+    border-radius: 99px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.22s;
+  }
+  .id-btn-primary:hover { background: #fff; transform: translateY(-1px); }
+  .id-btn-ghost {
+    background: transparent;
+    border: 1.5px solid var(--border);
+    color: var(--text-dim);
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 14px 20px;
+    border-radius: 99px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .id-btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ── TOP BAR (role indicator) ── */
+  .app-top-bar {
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding: 10px 16px;
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+  }
+  .app-top-bar.visible { display: flex; }
+  .top-bar-role {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .top-bar-logout {
+    background: transparent;
+    border: 1px solid rgba(239,68,68,0.25);
+    color: rgba(239,68,68,0.7);
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 6px 14px;
+    border-radius: 99px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .top-bar-logout:hover { border-color: var(--red); color: var(--red); }
+
+  /* ── DASHBOARD SCREEN ── */
+  .dashboard-screen { display: none; }
+  .dashboard-screen.visible { display: block; animation: fadeUp 0.5s ease both; }
+  .dash-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .dash-kpi {
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+  }
+  .dash-kpi-val {
+    font-family: 'Syne', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    margin-bottom: 4px;
+  }
+  .dash-kpi-lbl {
+    font-size: 11px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'Syne', sans-serif;
+  }
+  .dash-kpi-pct {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 4px;
+  }
+  .dash-levels-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .dash-level-card {
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    text-align: center;
+  }
+  .dash-level-val {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 2px;
+  }
+  .dash-level-lbl {
+    font-size: 10px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'Syne', sans-serif;
+    margin-bottom: 4px;
+  }
+  .dash-level-pct {
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+
+  /* ── AUDIT LOG SCREEN ── */
+  .audit-screen { display: none; }
+  .audit-screen.visible { display: block; animation: fadeUp 0.5s ease both; }
+  .audit-entry {
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    gap: 12px;
+    align-items: center;
+    padding: 12px 16px;
+    background: var(--dark3);
+    border-radius: 10px;
+    margin-bottom: 8px;
+    font-size: 12px;
+  }
+  .audit-action {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 99px;
+    text-align: center;
+  }
+  .audit-action.LOGIN  { background: rgba(46,204,113,0.1); color: var(--green); border: 1px solid rgba(46,204,113,0.25); }
+  .audit-action.LOGOUT { background: rgba(136,136,170,0.1); color: var(--text-dim); border: 1px solid rgba(136,136,170,0.2); }
+  .audit-action.EXPORT { background: rgba(59,130,246,0.1); color: #60a5fa; border: 1px solid rgba(59,130,246,0.25); }
+  .audit-action.DELETE { background: rgba(239,68,68,0.1); color: var(--red); border: 1px solid rgba(239,68,68,0.25); }
+  .audit-action.VIEW   { background: rgba(234,179,8,0.1); color: var(--yellow); border: 1px solid rgba(234,179,8,0.25); }
+  .audit-desc { color: var(--text-dim); line-height: 1.5; }
+  .audit-ts { font-size: 11px; color: var(--text-dim); white-space: nowrap; opacity: 0.7; }
+
+  /* ── FILTERS & PAGINATION (história avançada - Fase 2) ── */
+  .hist-filters {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr auto;
+    gap: 8px;
+    margin-bottom: 14px;
+    align-items: end;
+  }
+  .hist-filter-field label {
+    display: block;
+    font-family: 'Syne', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+  }
+  .hist-filter-field input,
+  .hist-filter-field select {
+    width: 100%;
+    background: var(--dark3);
+    border: 1.5px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 9px 12px;
+    color: var(--text);
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .hist-filter-field input:focus,
+  .hist-filter-field select:focus { border-color: var(--gold); }
+  .hist-filter-field select option { background: var(--dark3); }
+  .hist-export-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .hist-export-btn {
+    background: transparent;
+    border: 1.5px solid var(--border);
+    color: var(--text-dim);
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    border-radius: 99px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .hist-export-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .hist-count { font-size: 12px; color: var(--text-dim); margin-left: auto; }
+  .hist-table-wrap { overflow-x: auto; border-radius: 14px; border: 1px solid var(--border); margin-bottom: 14px; }
+  .hist-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .hist-table thead tr { background: rgba(245,200,66,0.05); border-bottom: 1px solid var(--border); }
+  .hist-table thead th { padding: 11px 13px; text-align: left; font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold); white-space: nowrap; }
+  .hist-table tbody tr { border-bottom: 1px solid rgba(255,255,255,0.04); transition: background 0.15s; cursor: pointer; }
+  .hist-table tbody tr:hover { background: rgba(255,255,255,0.025); }
+  .hist-table tbody tr:last-child { border-bottom: none; }
+  .hist-table tbody td { padding: 11px 13px; color: var(--text-dim); vertical-align: middle; }
+  .chip-first  { display: inline-flex; padding: 3px 9px; border-radius: 99px; font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; background: rgba(59,130,246,0.1); color: #60a5fa; border: 1px solid rgba(59,130,246,0.3); }
+  .chip-reeval { display: inline-flex; padding: 3px 9px; border-radius: 99px; font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; background: rgba(168,85,247,0.1); color: #c084fc; border: 1px solid rgba(168,85,247,0.3); }
+  .pagination-row { display: flex; align-items: center; gap: 6px; justify-content: center; margin-top: 14px; }
+  .pg-btn { padding: 7px 13px; border-radius: 8px; border: 1px solid var(--border); background: var(--dark3); color: var(--text-dim); font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+  .pg-btn:hover:not(:disabled) { border-color: var(--gold); color: var(--gold); }
+  .pg-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+  .pg-btn.active { background: var(--gold); color: var(--dark); border-color: var(--gold); }
+  .pg-info { font-size: 12px; color: var(--text-dim); padding: 0 6px; }
+
+  /* ── MODAL CONFIRM CLEAR ── */
+  .confirm-modal-ov {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    z-index: 300;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    backdrop-filter: blur(4px);
+  }
+  .confirm-modal-ov.open { display: flex; }
+  .confirm-modal-box {
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px;
+    max-width: 400px;
+    width: 100%;
+    animation: fadeUp 0.3s ease both;
+  }
+  .confirm-modal-title { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 800; margin-bottom: 8px; }
+  .confirm-modal-text { font-size: 13px; color: var(--text-dim); line-height: 1.7; margin-bottom: 18px; }
+  .confirm-modal-btns { display: flex; gap: 10px; }
+
   /* ── RESPONSIVE ── */
   @media (max-width: 480px) {
     .question-card { padding: 22px 18px 18px; }
@@ -855,6 +1277,91 @@
 </style>
 </head>
 <body>
+<!-- ══════════════════ LOGIN SCREEN ══════════════════ -->
+<div class="login-screen-wrap visible" id="login-screen">
+  <div class="login-center">
+    <div>
+      <div style="text-align:center;margin-bottom:28px">
+        <div class="logo-badge"><div class="dot"></div><span>Ultra Bet</span></div>
+        <div class="login-title">Jogo Responsável</div>
+        <div class="login-sub">Acesse com suas credenciais para continuar.</div>
+      </div>
+      <div class="login-box">
+        <div class="login-role-row">
+          <button class="role-pill active" id="rp-admin" onclick="_selRole('admin')">🔐 Admin</button>
+          <button class="role-pill" id="rp-view"  onclick="_selRole('view')">👁 Visualizar</button>
+          <button class="role-pill" id="rp-client" onclick="_selRole('client')">📋 Questionário</button>
+        </div>
+        <p id="login-client-hint" style="display:none;font-size:12px;color:var(--text-dim);text-align:center;margin-bottom:16px;padding:10px 14px;background:rgba(245,200,66,0.05);border:1px solid rgba(245,200,66,0.15);border-radius:10px;">
+          Não é necessário login para responder.
+        </p>
+        <div id="login-pwd-wrap" class="login-field">
+          <label>Senha</label>
+          <input type="password" id="login-pwd" placeholder="Digite sua senha"
+                 onkeydown="if(event.key==='Enter') _doLogin()">
+        </div>
+        <div class="login-err" id="login-err">Senha incorreta. Tente novamente.</div>
+        <button class="login-btn" onclick="_doLogin()">Entrar →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ IDENTIFICATION SCREEN ══════════════════ -->
+<div class="login-screen-wrap" id="id-screen">
+  <div class="login-center">
+    <div style="width:100%;max-width:480px">
+      <div style="text-align:center;margin-bottom:28px">
+        <div class="logo-badge"><div class="dot"></div><span>Ultra Bet</span></div>
+        <div class="login-title">Identificação</div>
+        <div class="login-sub">Informe seus dados antes de iniciar a avaliação.</div>
+      </div>
+      <div class="id-card">
+        <div class="id-card-title">👤 Dados do Cliente</div>
+        <div class="id-field">
+          <label>ID do Cliente</label>
+          <input type="text" id="id-cliente-input" placeholder="Ex: CLT001">
+        </div>
+        <div class="id-field">
+          <label>Nome Completo</label>
+          <input type="text" id="id-nome-input" placeholder="Seu nome completo">
+        </div>
+        <div class="id-field">
+          <label>CPF</label>
+          <input type="text" id="id-cpf-input" placeholder="000.000.000-00"
+                 maxlength="14" oninput="_fmtCPF(this)"
+                 onkeydown="if(event.key==='Enter') _startQuiz()">
+        </div>
+        <div class="login-err" id="id-err">Preencha todos os campos corretamente.</div>
+        <div class="id-btn-row">
+          <button class="id-btn-ghost" onclick="_backToLogin()">← Voltar</button>
+          <button class="id-btn-primary" onclick="_startQuiz()">Iniciar Avaliação →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ CONFIRM CLEAR MODAL ══════════════════ -->
+<div class="confirm-modal-ov" id="confirm-clear-modal">
+  <div class="confirm-modal-box">
+    <div class="confirm-modal-title">⚠️ Confirmar Exclusão</div>
+    <div class="confirm-modal-text">
+      Esta ação apagará <strong>todo o histórico</strong> permanentemente e não pode ser desfeita.
+      Digite a senha de administrador para confirmar.
+    </div>
+    <div class="login-field">
+      <label>Senha Admin</label>
+      <input type="password" id="clear-pwd-input" placeholder="Senha">
+    </div>
+    <div class="login-err" id="clear-pwd-err">Senha incorreta.</div>
+    <div class="confirm-modal-btns">
+      <button class="id-btn-ghost" style="flex:1" onclick="_closeClearModal()">Cancelar</button>
+      <button class="id-btn-primary" style="flex:1;background:var(--red)" onclick="_doClear()">Apagar Tudo</button>
+    </div>
+  </div>
+</div>
+
 <div class="wrapper">
 
   <!-- Header -->
@@ -870,24 +1377,48 @@
     </p>
   </div>
 
-  <!-- Navigation Tabs -->
-  <div class="nav-tabs">
-    <button class="nav-tab active" id="tab-form" onclick="showTab('form')">
+  <!-- Top Bar (sessão ativa) -->
+  <div class="app-top-bar" id="app-top-bar">
+    <span class="top-bar-role" id="top-bar-role-label">—</span>
+    <button class="top-bar-logout" onclick="_doLogout()">Encerrar Sessão</button>
+  </div>
+
+  <!-- Navigation Tabs (visíveis apenas para admin/view após login) -->
+  <div class="nav-tabs" id="nav-tabs-wrap" style="display:none;">
+    <button class="nav-tab" id="tab-form" onclick="showTab('form')">
       📋 &nbsp;Avaliação
     </button>
     <button class="nav-tab" id="tab-history" onclick="showTab('history')">
       🕘 &nbsp;Histórico
     </button>
+    <button class="nav-tab" id="tab-dashboard" onclick="showTab('dashboard')">
+      📊 &nbsp;Dashboard
+    </button>
+    <button class="nav-tab" id="tab-audit" onclick="showTab('audit')">
+      📋 &nbsp;Auditoria
+    </button>
   </div>
 
   <!-- ══════════════════ FORM SCREEN ══════════════════ -->
-  <div id="screen-form">
+  <div id="screen-form" style="display:none;">
+
+    <!-- Barra do quiz: Cancelar + título -->
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+      <button class="new-eval-btn" id="btn-cancel-quiz"
+              style="margin-top:0;font-size:11px;padding:9px 18px"
+              onclick="_cancelQuiz()">
+        ✕ Cancelar
+      </button>
+      <span style="font-family:'Syne',sans-serif;font-size:11px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase">
+        Avaliação em andamento
+      </span>
+    </div>
 
     <!-- Progress -->
     <div class="progress-wrap">
       <div class="progress-info">
         <span>Progresso</span>
-        <strong id="progress-text">0 / 15</strong>
+        <strong id="progress-text">1 / 15</strong>
       </div>
       <div class="progress-bar">
         <div class="progress-fill" id="progress-fill"></div>
@@ -896,27 +1427,20 @@
 
     <!-- Form -->
     <div class="form-wrap" id="form-wrap">
-      <div class="privacy-box">
-        <div class="privacy-title">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          Privacidade &amp; LGPD
-        </div>
-        As informações fornecidas serão tratadas de forma confidencial e utilizadas exclusivamente para fins de prevenção e promoção do Jogo Responsável, em conformidade com a <strong style="color:var(--text)">Lei nº 13.709/2018 (LGPD)</strong>. Seus dados não serão compartilhados com terceiros para fins comerciais.
-      </div>
 
-      <p style="font-size:13px; color:var(--text-dim); margin-bottom:28px; text-align:center;">
-        Selecione a opção que melhor representa seu comportamento.
-      </p>
-
+      <!-- Pergunta única (substituída a cada avanço) -->
       <div id="questions-container"></div>
 
-      <div class="submit-wrap">
-        <button class="submit-btn" id="submit-btn" disabled onclick="submitForm()">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-          Enviar Respostas
+      <!-- Navegação: Voltar (sem botão Próximo — avanço é automático) -->
+      <div style="margin-top:20px;display:flex;justify-content:space-between;align-items:center">
+        <button class="new-eval-btn" id="btn-back-q"
+                style="visibility:hidden;margin-top:0"
+                onclick="_qBack()">
+          ← Voltar
         </button>
-        <p class="submit-note">Suas respostas são anônimas e confidenciais.</p>
+        <span id="q-dots" style="font-size:12px;color:var(--text-dim)"></span>
       </div>
+
     </div><!-- /form-wrap -->
 
     <!-- Result Screen (shown after submit, within form tab) -->
@@ -929,6 +1453,16 @@
     <div class="history-screen visible" id="history-content"></div>
   </div>
 
+  <!-- ══════════════════ DASHBOARD SCREEN ══════════════════ -->
+  <div id="screen-dashboard" style="display:none;">
+    <div class="dashboard-screen visible" id="dashboard-content"></div>
+  </div>
+
+  <!-- ══════════════════ AUDIT SCREEN ══════════════════ -->
+  <div id="screen-audit" style="display:none;">
+    <div class="audit-screen visible" id="audit-content"></div>
+  </div>
+
 </div><!-- /wrapper -->
 
 <!-- Modal for history detail -->
@@ -937,6 +1471,275 @@
 </div>
 
 <script>
+/* ══════════════════════════════════════════════════
+   FASE 1 — VARIÁVEIS DE ESTADO
+══════════════════════════════════════════════════ */
+const _ADMIN_PWD      = 'Ultra@246810jr!!!';
+const _VIEW_PWD       = 'view2026';
+const _HIST_KEY       = '_ub_jr_hist_v2';
+const _LOG_KEY        = '_ub_jr_log_v1';
+const _HIST_PAGE_SIZE = 20;
+
+/* ── BASE ÚNICA DE SUBMISSÕES ───────────────────────
+   submissions[] é a única fonte de verdade.
+   É carregado do localStorage na inicialização e
+   sincronizado a cada nova submissão.
+─────────────────────────────────────────────────── */
+let submissions = [];
+
+let _authRole     = '';       // 'admin' | 'view' | 'client' | ''
+let _selectedRole = 'admin';  // seleção na tela de login
+let _clientData   = {};       // { idCliente, nome, cpf }
+
+/* ── Utilitários de login/identificação ── */
+function _selRole(r) {
+  _selectedRole = r;
+  ['admin','view','client'].forEach(x => {
+    document.getElementById('rp-' + x).classList.toggle('active', x === r);
+  });
+  // Mostrar senha apenas para admin e view
+  const isClient = r === 'client';
+  document.getElementById('login-pwd-wrap').style.display  = isClient ? 'none'  : 'block';
+  document.getElementById('login-client-hint').style.display = isClient ? 'block' : 'none';
+  document.getElementById('login-err').style.display = 'none';
+  if (isClient) document.getElementById('login-pwd').value = '';
+}
+
+function _doLogin() {
+  const pwd = document.getElementById('login-pwd').value;
+  const err = document.getElementById('login-err');
+  err.style.display = 'none';
+
+  if (_selectedRole === 'admin' && pwd === _ADMIN_PWD) {
+    _authRole = 'admin';
+    _addLog('LOGIN', 'Perfil Admin autenticado.');
+    document.getElementById('login-pwd').value = '';
+    _hideLoginShowApp();
+  } else if (_selectedRole === 'view' && pwd === _VIEW_PWD) {
+    _authRole = 'view';
+    _addLog('LOGIN', 'Perfil View (Analista) autenticado.');
+    document.getElementById('login-pwd').value = '';
+    _hideLoginShowApp();
+  } else if (_selectedRole === 'client' && pwd === '') {
+    _authRole = 'client';
+    document.getElementById('login-screen').classList.remove('visible');
+    document.getElementById('id-screen').classList.add('visible');
+  } else {
+    err.style.display = 'block';
+    document.getElementById('login-pwd').value = '';
+  }
+}
+
+function _hideLoginShowApp() {
+  document.getElementById('login-screen').classList.remove('visible');
+  hideAllScreens();
+  // Mostrar top-bar e nav-tabs para admin/view
+  const bar = document.getElementById('app-top-bar');
+  bar.classList.add('visible');
+  document.getElementById('top-bar-role-label').textContent =
+    _authRole === 'admin' ? '🔐 Administrador' : '👁 Analista (somente leitura)';
+  document.getElementById('nav-tabs-wrap').style.display = 'flex';
+  // Ir para Histórico como tela inicial para gestor
+  showTab('history');
+}
+
+function _backToLogin() {
+  document.getElementById('id-screen').classList.remove('visible');
+  document.getElementById('login-screen').classList.add('visible');
+  _authRole = '';
+}
+
+function _doLogout() {
+  if (_authRole && _authRole !== 'client') {
+    _addLog('LOGOUT', 'Sessão encerrada pelo usuário (' + _authRole + ').');
+  }
+  _authRole = '';
+  _clientData = {};
+  // Esconder tudo e mostrar login
+  hideAllScreens();
+  document.getElementById('app-top-bar').classList.remove('visible');
+  document.getElementById('nav-tabs-wrap').style.display = 'none';
+  document.getElementById('login-pwd').value = '';
+  document.getElementById('login-screen').classList.add('visible');
+}
+
+/* ══════════════════════════════════════════════════
+   CONTROLE GLOBAL DE TELAS — ponto único de controle
+══════════════════════════════════════════════════ */
+function hideAllScreens() {
+  ['screen-form', 'screen-history', 'screen-dashboard', 'screen-audit'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = 'none';
+  });
+  // Garantir que form-wrap e result-screen estejam ocultos dentro de screen-form
+  const fw = document.getElementById('form-wrap');
+  if (fw) fw.style.display = 'none';
+  const rs = document.getElementById('result-screen');
+  if (rs) { rs.style.display = 'none'; rs.classList.remove('visible'); }
+}
+
+function _cancelQuiz() {
+  hideAllScreens();
+  _enterFormView(); // zera estado do quiz
+  if (_authRole === 'admin' || _authRole === 'view') {
+    // Gestor: volta para o painel administrativo
+    showTab('history');
+  } else {
+    // Cliente: volta para tela de identificação
+    _clientData = {};
+    document.getElementById('id-cpf-input').value  = '';
+    document.getElementById('id-nome-input').value = '';
+    document.getElementById('id-cliente-input').value = '';
+    document.getElementById('id-err').style.display = 'none';
+    document.getElementById('id-screen').classList.add('visible');
+  }
+}
+
+function _fmtCPF(el) {
+  let v = el.value.replace(/\D/g,'');
+  if (v.length > 3)  v = v.slice(0,3) + '.' + v.slice(3);
+  if (v.length > 7)  v = v.slice(0,7) + '.' + v.slice(7);
+  if (v.length > 11) v = v.slice(0,11) + '-' + v.slice(11);
+  el.value = v;
+}
+
+function _startQuiz() {
+  const id   = document.getElementById('id-cliente-input').value.trim();
+  const nome = document.getElementById('id-nome-input').value.trim();
+  const cpf  = document.getElementById('id-cpf-input').value.trim();
+  const err  = document.getElementById('id-err');
+  if (!id || !nome || cpf.length < 14) {
+    err.style.display = 'block';
+    return;
+  }
+  err.style.display = 'none';
+  _clientData = { idCliente: id, nome, cpf };
+  // Esconder id-screen e qualquer outra tela aberta
+  document.getElementById('id-screen').classList.remove('visible');
+  hideAllScreens();
+  // Cliente não vê nav-tabs nem top-bar
+  document.getElementById('nav-tabs-wrap').style.display = 'none';
+  // Iniciar quiz
+  _enterFormView();
+}
+
+/* ── Log de Auditoria ── */
+function _addLog(action, desc) {
+  try {
+    const raw = localStorage.getItem(_LOG_KEY);
+    const log = raw ? JSON.parse(raw) : [];
+    log.unshift({
+      action,
+      desc,
+      role: _authRole || 'sistema',
+      ts: new Date().toISOString()
+    });
+    if (log.length > 500) log.pop(); // limite de 500 entradas
+    localStorage.setItem(_LOG_KEY, JSON.stringify(log));
+  } catch(e) {}
+}
+
+function _loadLog() {
+  try {
+    const raw = localStorage.getItem(_LOG_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch(e) { return []; }
+}
+
+/* ── Confirm Clear Modal ── */
+function _openClearModal() {
+  if (_authRole !== 'admin') return;
+  document.getElementById('confirm-clear-modal').classList.add('open');
+}
+
+function _closeClearModal() {
+  document.getElementById('confirm-clear-modal').classList.remove('open');
+  document.getElementById('clear-pwd-input').value = '';
+  document.getElementById('clear-pwd-err').style.display = 'none';
+}
+
+function _doClear() {
+  const pwd = document.getElementById('clear-pwd-input').value;
+  const err = document.getElementById('clear-pwd-err');
+  if (pwd !== _ADMIN_PWD) {
+    err.style.display = 'block';
+    return;
+  }
+  localStorage.removeItem(_HIST_KEY);
+  _addLog('DELETE', 'Histórico completo apagado pelo administrador.');
+  _closeClearModal();
+  renderHistory();
+}
+
+/* ── Dashboard (estrutura — renderização completa na Fase 2) ── */
+function renderDashboard() {
+  const all   = submissions;
+  const total = all.length;
+  const scores = all.map(s => s.score || 0);
+  const avg    = total > 0 ? Math.round(scores.reduce((a,b)=>a+b,0)/total) : 0;
+  const byLevel = { low:0, mod:0, high:0, crit:0 };
+  all.forEach(s => { const l = s.nivel || 'low'; if (byLevel[l]!==undefined) byLevel[l]++; });
+  const pct = n => total > 0 ? ((n/total)*100).toFixed(1) + '%' : '0%';
+  const levelCfg = [
+    { key:'low',  label:'Baixo',    color:'#2ECC71' },
+    { key:'mod',  label:'Moderado', color:'#EAB308' },
+    { key:'high', label:'Alto',     color:'#F97316' },
+    { key:'crit', label:'Crítico',  color:'#EF4444' },
+  ];
+  const risk = _getRisk(avg);
+
+  const levelsHtml = levelCfg.map(lc => `
+    <div class="dash-level-card">
+      <div class="dash-level-val" style="color:${lc.color}">${byLevel[lc.key]}</div>
+      <div class="dash-level-lbl">${lc.label}</div>
+      <div class="dash-level-pct">${pct(byLevel[lc.key])}</div>
+    </div>`).join('');
+
+  document.getElementById('dashboard-content').innerHTML = `
+    <div class="dash-kpi-grid">
+      <div class="dash-kpi">
+        <div class="dash-kpi-val" style="color:var(--gold)">${total}</div>
+        <div class="dash-kpi-lbl">Total de Avaliações</div>
+      </div>
+      <div class="dash-kpi">
+        <div class="dash-kpi-val" style="color:${risk.color}">${avg}</div>
+        <div class="dash-kpi-lbl">Score Médio</div>
+        <div class="dash-kpi-pct">/ 45 pts</div>
+      </div>
+    </div>
+    <div class="result-card" style="margin-bottom:16px">
+      <div class="result-card-title">Distribuição por Nível de Risco</div>
+      <div class="dash-levels-grid">${levelsHtml}</div>
+    </div>
+    ${total === 0 ? '<p style="text-align:center;color:var(--text-dim);padding:40px 0;font-size:14px">Nenhuma avaliação registrada ainda.</p>' : ''}
+  `;
+}
+
+/* ── Auditoria (renderização básica) ── */
+function renderAudit() {
+  const log = _loadLog();
+  const container = document.getElementById('audit-content');
+  if (log.length === 0) {
+    container.innerHTML = `<div style="text-align:center;padding:60px 20px;color:var(--text-dim)">
+      <div style="font-size:40px;margin-bottom:16px;opacity:.3">📋</div>
+      <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:6px">Nenhum evento registrado</div>
+      <div style="font-size:13px">Os eventos de login, exportação e exclusão aparecerão aqui.</div>
+    </div>`;
+    return;
+  }
+  container.innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <div style="font-family:'Syne',sans-serif;font-size:12px;color:var(--text-dim)">${log.length} evento${log.length!==1?'s':''} registrado${log.length!==1?'s':''}</div>
+    </div>
+    ${log.map(e => `
+      <div class="audit-entry">
+        <span class="audit-action ${e.action}">${e.action}</span>
+        <span class="audit-desc">${e.desc}</span>
+        <span class="audit-ts">${_formatDate(e.ts)}</span>
+      </div>`).join('')}
+  `;
+}
+
 /* ══════════════════════════════════════════════════
    QUESTIONS DATA
 ══════════════════════════════════════════════════ */
@@ -1168,88 +1971,129 @@ function _formatDate(iso) {
 /* ══════════════════════════════════════════════════
    STORAGE
 ══════════════════════════════════════════════════ */
-function _saveRecord(record) {
+/* ══════════════════════════════════════════════════
+   BASE ÚNICA DE SUBMISSÕES
+   submissions[] é carregado do localStorage na init.
+   _saveRecord() salva e sincroniza.
+   _getSubmissions() retorna submissions[] diretamente.
+══════════════════════════════════════════════════ */
+function _initSubmissions() {
   try {
-    const raw = localStorage.getItem('_ub_jr_hist');
-    const hist = raw ? JSON.parse(raw) : [];
-    hist.unshift(record);
-    localStorage.setItem('_ub_jr_hist', JSON.stringify(hist));
-  } catch(e) { /* silently fail */ }
+    const raw = localStorage.getItem(_HIST_KEY);
+    submissions = raw ? JSON.parse(raw) : [];
+  } catch(e) { submissions = []; }
 }
 
-function _loadHistory() {
-  try {
-    const raw = localStorage.getItem('_ub_jr_hist');
-    return raw ? JSON.parse(raw) : [];
-  } catch(e) { return []; }
+function _saveRecord(record) {
+  submissions.unshift(record);
+  try { localStorage.setItem(_HIST_KEY, JSON.stringify(submissions)); } catch(e) {}
 }
+
+function _getSubmissions() {
+  return submissions;
+}
+
+function _loadHistory() { return submissions; }
 
 function _clearHistory() {
-  if (confirm('Deseja apagar todo o histórico de avaliações?')) {
-    localStorage.removeItem('_ub_jr_hist');
-    renderHistory();
-  }
+  submissions = [];
+  try { localStorage.removeItem(_HIST_KEY); } catch(e) {}
+  renderHistory();
 }
 
 /* ══════════════════════════════════════════════════
    BUILD QUESTIONS
 ══════════════════════════════════════════════════ */
-function buildQuestions() {
-  const container = document.getElementById('questions-container');
-  _Q.forEach((q, qi) => {
-    const delay = (qi * 0.04).toFixed(2);
-    const card = document.createElement('div');
-    card.className = 'question-card';
-    card.id = `card-${qi}`;
-    card.style.animationDelay = `${delay}s`;
+/* ── variável de índice da pergunta atual ── */
+let _currentQ = 0;
 
-    const optionsHTML = q.options.map((opt, oi) => `
-      <div class="option" id="opt-${qi}-${oi}" onclick="selectOption(${qi},${oi},${opt.score})">
+function buildQuestions() {
+  const q   = _Q[_currentQ];
+  const container = document.getElementById('questions-container');
+
+  // Opção pré-selecionada (ao voltar)
+  const saved = _answers[_currentQ];
+
+  const optionsHTML = q.options.map((opt, oi) => {
+    const isSel = saved && saved.score === opt.score ? 'selected' : '';
+    return `
+      <div class="option ${isSel}" id="opt-0-${oi}"
+           onclick="selectOption(${_currentQ},${oi},${opt.score})">
         <div class="radio-circle"></div>
         <span class="option-label">${opt.label}</span>
-      </div>
-    `).join('');
+      </div>`;
+  }).join('');
 
-    card.innerHTML = `
-      <div class="q-number">Pergunta ${qi + 1} de ${_Q.length}</div>
+  container.innerHTML = `
+    <div class="question-card" style="animation:fadeUp .35s ease both">
+      <div class="q-number">Pergunta ${_currentQ + 1} de ${_Q.length}</div>
       <div class="q-text">${q.text}</div>
       <div class="options">${optionsHTML}</div>
-    `;
-    container.appendChild(card);
+    </div>`;
 
-    if ((qi + 1) % 5 === 0 && qi < _Q.length - 1) {
-      const div = document.createElement('div');
-      div.className = 'section-divider';
-      div.innerHTML = `<span>Continuando</span>`;
-      container.appendChild(div);
-    }
-  });
+  // Botão Voltar: visível somente se não for a primeira pergunta
+  document.getElementById('btn-back-q').style.visibility =
+    _currentQ > 0 ? 'visible' : 'hidden';
+
+  // Pontos de progresso (dots)
+  const dots = _Q.map((_, i) => {
+    const answered = _answers[i] !== undefined;
+    const current  = i === _currentQ;
+    const color = current  ? 'var(--gold)' :
+                  answered ? 'rgba(245,200,66,0.4)' :
+                             'rgba(255,255,255,0.1)';
+    return `<span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:${color};margin:0 2px;transition:background .3s"></span>`;
+  }).join('');
+  document.getElementById('q-dots').innerHTML = dots;
+
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 /* ══════════════════════════════════════════════════
-   QUESTION INTERACTION
+   QUESTION INTERACTION — ONE AT A TIME
 ══════════════════════════════════════════════════ */
 function selectOption(qi, oi, score) {
-  _Q[qi].options.forEach((_, i) => {
-    const el = document.getElementById(`opt-${qi}-${i}`);
-    if (el) el.classList.remove('selected');
-  });
-  const selected = document.getElementById(`opt-${qi}-${oi}`);
-  if (selected) selected.classList.add('selected');
-  const card = document.getElementById(`card-${qi}`);
-  if (card) card.classList.add('answered');
-  _answers[qi] = { score, label: _Q[qi].options[oi].label, question: _Q[qi].text };
-  updateProgress();
-  if (Object.keys(_answers).length === _Q.length) {
-    document.getElementById('submit-btn').disabled = false;
+  // Salvar resposta
+  _answers[qi] = {
+    score,
+    label:    _Q[qi].options[oi].label,
+    question: _Q[qi].text
+  };
+
+  // Highlight visual brevemente antes de avançar
+  const opts = document.querySelectorAll('.option');
+  opts.forEach(el => el.classList.remove('selected'));
+  const chosen = document.getElementById(`opt-0-${oi}`);
+  if (chosen) chosen.classList.add('selected');
+
+  // Avançar após pequeno delay para feedback visual
+  setTimeout(() => {
+    if (_currentQ < _Q.length - 1) {
+      _currentQ++;
+      buildQuestions();
+    } else {
+      // Última pergunta respondida — submeter
+      submitForm();
+    }
+  }, 260);
+}
+
+function _qBack() {
+  if (_currentQ > 0) {
+    _currentQ--;
+    buildQuestions();
   }
 }
 
 function updateProgress() {
-  const count = Object.keys(_answers).length;
-  const pct = (count / _Q.length) * 100;
+  const answered = Object.keys(_answers).length;
+  // Progresso baseado na pergunta atual (não nas respondidas)
+  // para refletir posição no fluxo
+  const pct = ((_currentQ) / _Q.length) * 100;
   document.getElementById('progress-fill').style.width = pct + '%';
-  document.getElementById('progress-text').textContent = `${count} / ${_Q.length}`;
+  document.getElementById('progress-text').textContent =
+    `${_currentQ + 1} / ${_Q.length}`;
 }
 
 /* ══════════════════════════════════════════════════
@@ -1260,24 +2104,21 @@ let _appState = 'FORM_VIEW'; // 'FORM_VIEW' | 'RESULT_VIEW'
 function _enterFormView() {
   _appState = 'FORM_VIEW';
 
-  // 1. Wipe answer state
+  // 1. Limpar respostas e índice
   Object.keys(_answers).forEach(k => delete _answers[k]);
+  _currentQ = 0;
 
-  // 2. Reset progress
-  document.getElementById('submit-btn').disabled = true;
+  // 2. Garantir que apenas screen-form esteja visível
+  hideAllScreens();
+  document.getElementById('screen-form').style.display  = 'block';
+  document.getElementById('form-wrap').style.display    = 'block';
+
+  // 3. Reset progress bar
   document.getElementById('progress-fill').style.width = '0%';
-  document.getElementById('progress-text').textContent = '0 / 15';
+  document.getElementById('progress-text').textContent = '1 / 15';
 
-  // 3. Clear all option selections and card states
-  document.querySelectorAll('.option').forEach(el => el.classList.remove('selected'));
-  document.querySelectorAll('.question-card').forEach(el => el.classList.remove('answered'));
-
-  // 4. Show form, hide result — explicit display control
-  document.getElementById('form-wrap').style.display   = 'block';
-  const rs = document.getElementById('result-screen');
-  rs.classList.remove('visible');
-  rs.style.display = 'none';
-  rs.innerHTML = '';
+  // 4. Renderizar primeira pergunta
+  buildQuestions();
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -1285,8 +2126,9 @@ function _enterFormView() {
 function _enterResultView(record, risk) {
   _appState = 'RESULT_VIEW';
 
-  // Hide form, show result container
-  document.getElementById('form-wrap').style.display = 'none';
+  // Esconder tudo, depois mostrar apenas o resultado
+  hideAllScreens();
+  document.getElementById('screen-form').style.display = 'block';
   const rs = document.getElementById('result-screen');
   rs.style.display = 'block';
 
@@ -1299,40 +2141,44 @@ function _enterResultView(record, risk) {
    SUBMIT
 ══════════════════════════════════════════════════ */
 function submitForm() {
+  /* ── score (lógica intocada) ── */
   const total = Object.values(_answers).reduce((a, b) => a + b.score, 0);
   const risk  = _getRisk(total);
 
   const answersArr = Object.keys(_answers).sort((a,b) => +a - +b).map(k => ({
-    qi: +k,
+    qi:       +k,
     question: _answers[k].question,
     label:    _answers[k].label,
     score:    _answers[k].score
   }));
 
-  // ── internalResult: salvo no histórico, nunca exibido ao cliente ──────────
-  const internalResult = {
-    score:                  total,
-    nivel:                  risk.key,
-    nivelLabel:             risk.label,
-    interpretacaoCompleta:  risk.internal.interpretation,
-    recomendacoesOperacionais: risk.internal.recommendations.map(r => r.text),
-    flags:                  risk.internal.flags
-  };
+  /* ── tentativa: conta quantas submissões do mesmo CPF já existem ── */
+  const tentativa = submissions.filter(s => s.cpf === (_clientData.cpf || '')).length + 1;
 
-  // ── publicResult: exibido ao cliente (neutro, educativo) ──────────────────
-  const publicResult = {
-    message:          risk.public.message,
-    tips:             risk.public.tips,
-    showSupportLinks: risk.public.showSupportLinks
-  };
-
-  // ── record completo salvo em localStorage ─────────────────────────────────
+  /* ── record com campos diretos — sem wrappers aninhados ── */
   const record = {
-    id:             _genId(),
-    timestamp:      new Date().toISOString(),
-    answers:        answersArr,
-    internalResult,
-    publicResult
+    id:          _genId(),
+    timestamp:   new Date().toISOString(),
+    // identificação do cliente
+    idCliente:   _clientData.idCliente || '',
+    nome:        _clientData.nome      || '',
+    cpf:         _clientData.cpf       || '',
+    tentativa,
+    tipo:        tentativa === 1 ? 'Primeira' : 'Reavaliação',
+    // resultado (campos diretos — fonte única para histórico, dashboard e export)
+    score:       total,
+    nivel:       risk.key,
+    nivelLabel:  risk.label,
+    // respostas completas
+    answers:     answersArr,
+    // dados internos (compliance — nunca exibidos ao cliente)
+    interpretacao:   risk.internal.interpretation,
+    recomendacoes:   risk.internal.recommendations.map(r => r.text),
+    flags:           risk.internal.flags,
+    // dados públicos (exibidos ao cliente)
+    publicMsg:       risk.public.message,
+    publicTips:      risk.public.tips,
+    showSupportLinks: risk.public.showSupportLinks
   };
 
   _saveRecord(record);
@@ -1352,15 +2198,20 @@ function resetForm() {
    recomendações operacionais ou ações internas.
 ══════════════════════════════════════════════════ */
 function renderResult(record, risk) {
-  const pub = record.publicResult;
+  /* lê campos diretos do record — sem wrapper publicResult */
+  const tips    = record.publicTips      || risk.public.tips      || [];
+  const showSUS = record.showSupportLinks != null
+                    ? record.showSupportLinks
+                    : risk.public.showSupportLinks;
+  const msg     = record.publicMsg       || risk.public.message   || '';
 
-  const tipsHtml = pub.tips.map(t =>
+  const tipsHtml = tips.map(t =>
     `<div class="rec-item low" style="background:rgba(255,255,255,0.03); border-color:rgba(255,255,255,0.08); color:var(--text-dim)">
       <span class="rec-icon">💡</span><span>${t}</span>
     </div>`
   ).join('');
 
-  const supportBlock = pub.showSupportLinks ? `
+  const supportBlock = showSUS ? `
     <div class="sus-block">
       <div class="sus-block-title">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.53 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 5.9 5.9l.96-.96a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 21.28 16v.62z"/></svg>
@@ -1414,7 +2265,7 @@ function renderResult(record, risk) {
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
         Sobre o seu resultado
       </div>
-      <p class="interpretation-text">${pub.message}</p>
+      <p class="interpretation-text">${msg}</p>
     </div>
 
     <div class="result-card">
@@ -1437,93 +2288,210 @@ function renderResult(record, risk) {
 }
 
 /* ══════════════════════════════════════════════════
-   HISTORY  (visão interna — usa internalResult)
+   HISTORY — data-driven a partir de _getSubmissions()
 ══════════════════════════════════════════════════ */
-function renderHistory() {
-  const hist = _loadHistory();
-  const container = document.getElementById('history-content');
 
-  if (hist.length === 0) {
-    container.innerHTML = `
-      <div class="history-empty">
-        <div class="history-empty-icon">📋</div>
-        <div class="history-empty-text">Nenhuma avaliação realizada</div>
-        <p style="font-size:13px;">Complete o questionário para ver o histórico aqui.</p>
+/* ══════════════════════════════════════════════════
+   HISTÓRICO — fonte única: submissions[]
+══════════════════════════════════════════════════ */
+let _histFilters = { cpf:'', id:'', nivel:'' };
+let _histPage    = 1;
+
+function _applyFilters(all) {
+  const f = _histFilters;
+  return all.filter(s => {
+    if (f.cpf   && !(s.cpf        || '').toLowerCase().includes(f.cpf.toLowerCase()))   return false;
+    if (f.id    && !(s.idCliente  || '').toLowerCase().includes(f.id.toLowerCase()))    return false;
+    if (f.nivel && (s.nivel || '') !== f.nivel) return false;
+    return true;
+  });
+}
+
+function _onFilterChange() {
+  _histFilters.cpf   = (document.getElementById('hf-cpf')  || {value:''}).value.trim();
+  _histFilters.id    = (document.getElementById('hf-id')   || {value:''}).value.trim();
+  _histFilters.nivel = (document.getElementById('hf-nivel')|| {value:''}).value;
+  _histPage = 1;
+  renderHistory();
+}
+
+function renderHistory() {
+  const container = document.getElementById('history-content');
+  const filtered  = _applyFilters(submissions);
+  const total     = filtered.length;
+  const pages     = Math.max(1, Math.ceil(total / _HIST_PAGE_SIZE));
+  if (_histPage > pages) _histPage = 1;
+  const start = (_histPage - 1) * _HIST_PAGE_SIZE;
+  const page  = filtered.slice(start, start + _HIST_PAGE_SIZE);
+
+  const isAdmin = _authRole === 'admin';
+  const clearBtn = isAdmin
+    ? `<button class="clear-history-btn" style="float:none;margin-left:auto" onclick="_openClearModal()">🗑 Limpar tudo</button>`
+    : '';
+
+  const filtersHtml = `
+    <div class="hist-filters" style="margin-bottom:14px;display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:8px;align-items:end">
+      <div class="hist-filter-field">
+        <label>CPF</label>
+        <input id="hf-cpf" type="text" placeholder="000.000.000-00"
+               value="${_histFilters.cpf}" oninput="_onFilterChange()">
+      </div>
+      <div class="hist-filter-field">
+        <label>ID Cliente</label>
+        <input id="hf-id" type="text" placeholder="CLT001"
+               value="${_histFilters.id}" oninput="_onFilterChange()">
+      </div>
+      <div class="hist-filter-field">
+        <label>Nível de Risco</label>
+        <select id="hf-nivel" onchange="_onFilterChange()">
+          <option value="" ${!_histFilters.nivel?'selected':''}>Todos</option>
+          <option value="low"  ${_histFilters.nivel==='low' ?'selected':''}>Baixo</option>
+          <option value="mod"  ${_histFilters.nivel==='mod' ?'selected':''}>Moderado</option>
+          <option value="high" ${_histFilters.nivel==='high'?'selected':''}>Alto</option>
+          <option value="crit" ${_histFilters.nivel==='crit'?'selected':''}>Crítico</option>
+        </select>
+      </div>
+      <button class="hist-export-btn" onclick="_histFilters={cpf:'',id:'',nivel:''};_histPage=1;renderHistory()">Limpar</button>
+    </div>`;
+
+  const exportRow = `
+    <div class="hist-export-row">
+      <button class="hist-export-btn" onclick="exportCSV()">⬇ CSV</button>
+      <button class="hist-export-btn" onclick="exportXLSX()">⬇ Excel</button>
+      <span class="hist-count">${total} registro${total!==1?'s':''} de ${submissions.length} total</span>
+      ${clearBtn}
+    </div>`;
+
+  let tableHtml = '';
+  if (page.length === 0) {
+    tableHtml = `<div class="history-empty">
+      <div class="history-empty-icon">🔍</div>
+      <div class="history-empty-text">Nenhum registro encontrado</div>
+      <p style="font-size:13px;">${submissions.length > 0 ? 'Tente ajustar os filtros.' : 'Complete o questionário para ver os registros aqui.'}</p>
+    </div>`;
+  } else {
+    const rows = page.map(s => {
+      const r         = _getRisk(s.score || 0);
+      const chipClass = (s.tipo === 'Primeira') ? 'chip-first' : 'chip-reeval';
+      return `<tr onclick="openModal('${s.id}')" title="Clique para detalhes">
+        <td style="color:var(--text);font-family:'Syne',sans-serif;font-size:11px">${s.idCliente || '—'}</td>
+        <td style="color:var(--text)">${s.nome || '—'}</td>
+        <td style="font-family:monospace;font-size:11px">${s.cpf || '—'}</td>
+        <td>${_formatDate(s.timestamp)}</td>
+        <td style="font-family:'Syne',sans-serif;font-weight:800;color:${r.color};font-size:15px">${s.score || 0}</td>
+        <td><span class="risk-badge-sm ${s.nivel || 'low'}">${s.nivelLabel || '—'}</span></td>
+        <td><span class="${chipClass}">${s.tipo || '—'}</span></td>
+        <td style="text-align:center;color:var(--text-dim)">${s.tentativa || 1}</td>
+      </tr>`;
+    }).join('');
+
+    tableHtml = `
+      <div class="hist-table-wrap">
+        <table class="hist-table">
+          <thead><tr>
+            <th>ID Cliente</th><th>Nome</th><th>CPF</th><th>Data</th>
+            <th>Score</th><th>Nível</th><th>Tipo</th><th>#</th>
+          </tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
       </div>`;
-    return;
   }
 
-  // Support both new format (internalResult) and legacy records
-  const getScore = h => h.internalResult ? h.internalResult.score : (h.score || 0);
-  const getLevel = h => h.internalResult ? h.internalResult.nivel : (h.level || 'low');
+  let paginationHtml = '';
+  if (pages > 1) {
+    const prev = `<button class="pg-btn" onclick="_histGoPage(${_histPage-1})" ${_histPage===1?'disabled':''}>‹</button>`;
+    const next = `<button class="pg-btn" onclick="_histGoPage(${_histPage+1})" ${_histPage===pages?'disabled':''}>›</button>`;
+    const info = `<span class="pg-info">Página ${_histPage} de ${pages}</span>`;
+    const lo   = Math.max(1, _histPage - 2);
+    const hi   = Math.min(pages, _histPage + 2);
+    const nums = [];
+    for (let p = lo; p <= hi; p++) {
+      nums.push(`<button class="pg-btn ${p===_histPage?'active':''}" onclick="_histGoPage(${p})">${p}</button>`);
+    }
+    paginationHtml = `<div class="pagination-row">${prev}${nums.join('')}${info}${next}</div>`;
+  }
 
-  const scores   = hist.map(getScore);
-  const avgScore = Math.round(scores.reduce((a,b) => a+b, 0) / scores.length);
-  const critCount = hist.filter(h => getLevel(h) === 'crit').length;
+  container.innerHTML = filtersHtml + exportRow + tableHtml + paginationHtml;
+}
 
-  const statsHtml = `
-    <div class="history-stats">
-      <div class="history-stat">
-        <div class="history-stat-val">${hist.length}</div>
-        <div class="history-stat-lbl">Avaliações</div>
-      </div>
-      <div class="history-stat">
-        <div class="history-stat-val" style="color:${_getRisk(avgScore).color}">${avgScore}</div>
-        <div class="history-stat-lbl">Score Médio</div>
-      </div>
-      <div class="history-stat">
-        <div class="history-stat-val" style="color:${critCount > 0 ? '#EF4444' : '#2ECC71'}">${critCount}</div>
-        <div class="history-stat-lbl">Críticos</div>
-      </div>
-    </div>`;
+function _histGoPage(p) {
+  const pages = Math.max(1, Math.ceil(_applyFilters(submissions).length / _HIST_PAGE_SIZE));
+  _histPage   = Math.max(1, Math.min(p, pages));
+  renderHistory();
+}
 
-  const clearBtn = `<button class="clear-history-btn" onclick="_clearHistory()">🗑 Limpar histórico</button>`;
+/* ══════════════════════════════════════════════════
+   EXPORTAÇÃO — lê submissions[] com filtros aplicados
+══════════════════════════════════════════════════ */
+function exportCSV() {
+  const rows = _applyFilters(submissions);
+  if (!rows.length) { alert('Nenhum registro para exportar.'); return; }
+  const hdr   = ['ID','idCliente','nome','cpf','data','score','nivel','nivelLabel','tipo','tentativa'];
+  const lines = [hdr.join(';')];
+  rows.forEach(s => lines.push([
+    s.id,
+    s.idCliente  || '',
+    (s.nome || '').replace(/;/g,' '),
+    s.cpf        || '',
+    _formatDate(s.timestamp),
+    s.score      || 0,
+    s.nivel      || '',
+    s.nivelLabel || '',
+    s.tipo       || '',
+    s.tentativa  || 1,
+  ].join(';')));
+  const blob = new Blob(['\uFEFF' + lines.join('\n')], { type: 'text/csv;charset=utf-8;' });
+  const url  = URL.createObjectURL(blob);
+  const a    = Object.assign(document.createElement('a'), { href: url, download: 'jr_' + Date.now() + '.csv' });
+  a.click(); URL.revokeObjectURL(url);
+  _addLog('EXPORT', `CSV: ${rows.length} registro(s) — ${_authRole}.`);
+}
 
-  const itemsHtml = hist.map(h => {
-    const score = getScore(h);
-    const r = _getRisk(score);
-    return `
-    <div class="history-item" onclick="openModal('${h.id}')">
-      <div>
-        <div class="history-item-date">${_formatDate(h.timestamp)}</div>
-        <div class="history-item-id">${h.id}</div>
-      </div>
-      <div class="history-score">
-        <div class="history-score-num" style="color:${r.color}">${score}</div>
-        <div class="history-score-label">/ 45</div>
-      </div>
-      <span class="risk-badge-sm ${r.key}">${r.label}</span>
-      <span class="history-chevron">›</span>
-    </div>`;
-  }).join('');
-
-  container.innerHTML = statsHtml + clearBtn + `<div class="history-list">${itemsHtml}</div>`;
+function exportXLSX() {
+  const rows = _applyFilters(submissions);
+  if (!rows.length) { alert('Nenhum registro para exportar.'); return; }
+  const hdrs = ['ID','ID Cliente','Nome','CPF','Data','Score','Nível','Tipo','Tentativa'];
+  let tbl = '<table border="1"><thead><tr>' + hdrs.map(h=>`<th>${h}</th>`).join('') + '</tr></thead><tbody>';
+  rows.forEach(s => {
+    tbl += '<tr>' + [
+      s.id, s.idCliente||'', s.nome||'', s.cpf||'',
+      _formatDate(s.timestamp), s.score||0,
+      s.nivelLabel||'', s.tipo||'', s.tentativa||1,
+    ].map(v=>`<td>${v}</td>`).join('') + '</tr>';
+  });
+  tbl += '</tbody></table>';
+  const blob = new Blob(
+    [`<html xmlns:o='urn:schemas-microsoft-com:office:office'><head><meta charset="UTF-8"></head><body>${tbl}</body></html>`],
+    { type: 'application/vnd.ms-excel;charset=utf-8;' }
+  );
+  const url = URL.createObjectURL(blob);
+  const a   = Object.assign(document.createElement('a'), { href: url, download: 'jr_' + Date.now() + '.xls' });
+  a.click(); URL.revokeObjectURL(url);
+  _addLog('EXPORT', `Excel: ${rows.length} registro(s) — ${_authRole}.`);
 }
 
 /* ══════════════════════════════════════════════════
    MODAL  (visão interna — exibe internalResult)
 ══════════════════════════════════════════════════ */
 function openModal(id) {
-  const hist = _loadHistory();
-  const rec  = hist.find(h => h.id === id);
+  const rec  = submissions.find(s => s.id === id);
   if (!rec) return;
 
-  // Support both new and legacy record formats
-  const ir    = rec.internalResult || { score: rec.score || 0, nivel: rec.level || 'low', nivelLabel: rec.levelLabel || '', interpretacaoCompleta: '', recomendacoesOperacionais: rec.recommendations || [], flags: {} };
-  const risk  = _getRisk(ir.score);
+  const risk  = _getRisk(rec.score || 0);
+  const flags = rec.flags || {};
 
-  const recItems = ir.recomendacoesOperacionais.map(t =>
+  const recItems = (rec.recomendacoes || []).map(t =>
     `<div class="rec-item ${risk.key}" style="margin-bottom:8px"><span class="rec-icon">•</span><span style="font-size:13px">${t}</span></div>`
   ).join('');
 
-  const flagsHtml = ir.flags ? `
+  const flagsHtml = `
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px">
-      <span style="padding:3px 10px;border-radius:99px;font-size:10px;font-weight:700;font-family:'Syne',sans-serif;letter-spacing:1px;background:${ir.flags.limiteSugerido?'rgba(249,115,22,0.15)':'rgba(255,255,255,0.04)'};border:1px solid ${ir.flags.limiteSugerido?'rgba(249,115,22,0.4)':'rgba(255,255,255,0.08)'};color:${ir.flags.limiteSugerido?'#F97316':'#555577'}">LIMITE${ir.flags.limiteSugerido?' ✔':' –'}</span>
-      <span style="padding:3px 10px;border-radius:99px;font-size:10px;font-weight:700;font-family:'Syne',sans-serif;letter-spacing:1px;background:${ir.flags.monitoramento?'rgba(234,179,8,0.15)':'rgba(255,255,255,0.04)'};border:1px solid ${ir.flags.monitoramento?'rgba(234,179,8,0.4)':'rgba(255,255,255,0.08)'};color:${ir.flags.monitoramento?'#EAB308':'#555577'}">MONITORAMENTO${ir.flags.monitoramento?' ✔':' –'}</span>
-      <span style="padding:3px 10px;border-radius:99px;font-size:10px;font-weight:700;font-family:'Syne',sans-serif;letter-spacing:1px;background:${ir.flags.ddiRecomendada?'rgba(168,85,247,0.15)':'rgba(255,255,255,0.04)'};border:1px solid ${ir.flags.ddiRecomendada?'rgba(168,85,247,0.4)':'rgba(255,255,255,0.08)'};color:${ir.flags.ddiRecomendada?'#a855f7':'#555577'}">DDI${ir.flags.ddiRecomendada?' ✔':' –'}</span>
-    </div>` : '';
+      <span style="padding:3px 10px;border-radius:99px;font-size:10px;font-weight:700;font-family:'Syne',sans-serif;letter-spacing:1px;background:${flags.limite?'rgba(249,115,22,0.15)':'rgba(255,255,255,0.04)'};border:1px solid ${flags.limite?'rgba(249,115,22,0.4)':'rgba(255,255,255,0.08)'};color:${flags.limite?'#F97316':'#555577'}">LIMITE${flags.limite?' ✔':' –'}</span>
+      <span style="padding:3px 10px;border-radius:99px;font-size:10px;font-weight:700;font-family:'Syne',sans-serif;letter-spacing:1px;background:${flags.monitor?'rgba(234,179,8,0.15)':'rgba(255,255,255,0.04)'};border:1px solid ${flags.monitor?'rgba(234,179,8,0.4)':'rgba(255,255,255,0.08)'};color:${flags.monitor?'#EAB308':'#555577'}">MONITORAMENTO${flags.monitor?' ✔':' –'}</span>
+      <span style="padding:3px 10px;border-radius:99px;font-size:10px;font-weight:700;font-family:'Syne',sans-serif;letter-spacing:1px;background:${flags.ddi?'rgba(168,85,247,0.15)':'rgba(255,255,255,0.04)'};border:1px solid ${flags.ddi?'rgba(168,85,247,0.4)':'rgba(255,255,255,0.08)'};color:${flags.ddi?'#a855f7':'#555577'}">DDI${flags.ddi?' ✔':' –'}</span>
+    </div>`;
 
-  const ansChips = rec.answers.map((a, i) =>
+  const ansChips = (rec.answers || []).map((a, i) =>
     `<div class="answer-chip" style="font-size:11px">
       <div class="answer-chip-q">P${i+1}</div>
       <div class="answer-chip-v s${a.score}">${a.score}</div>
@@ -1534,6 +2502,7 @@ function openModal(id) {
     <div class="modal-header">
       <div>
         <div style="font-family:'Syne',sans-serif;font-size:10px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px">VISÃO INTERNA — USO EXCLUSIVO DA EMPRESA</div>
+        <div style="font-family:'Syne',sans-serif;font-size:11px;color:var(--text-dim);margin-bottom:2px">${rec.nome || '—'} &nbsp;|&nbsp; ${rec.cpf || '—'}</div>
         <div style="font-family:'Syne',sans-serif;font-size:11px;color:var(--text-dim);margin-bottom:4px">${_formatDate(rec.timestamp)}</div>
         <div style="font-family:monospace;font-size:10px;color:var(--text-dim);opacity:0.5">${rec.id}</div>
       </div>
@@ -1542,23 +2511,23 @@ function openModal(id) {
 
     <div style="text-align:center;margin-bottom:24px">
       <span class="risk-badge-large ${risk.key}" style="margin-bottom:12px;display:inline-flex">${risk.icon} ${risk.label}</span>
-      <div><span style="font-family:'Syne',sans-serif;font-size:40px;font-weight:800;color:${risk.color}">${ir.score}</span><span style="color:var(--text-dim);font-size:18px"> / 45</span></div>
+      <div><span style="font-family:'Syne',sans-serif;font-size:40px;font-weight:800;color:${risk.color}">${rec.score}</span><span style="color:var(--text-dim);font-size:18px"> / 45</span></div>
       ${flagsHtml}
     </div>
 
-    ${ir.interpretacaoCompleta ? `
+    ${rec.interpretacao ? `
     <div style="margin-bottom:20px">
       <div class="result-card-title" style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px">Interpretação Interna</div>
-      <p style="font-size:13px;color:var(--text-dim);line-height:1.7">${ir.interpretacaoCompleta}</p>
+      <p style="font-size:13px;color:var(--text-dim);line-height:1.7">${rec.interpretacao}</p>
     </div>` : ''}
 
     <div style="margin-bottom:20px">
       <div class="result-card-title" style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px">Recomendações Operacionais</div>
-      ${recItems || '<p style="font-size:13px;color:var(--text-dim)">Sem recomendações operacionais.</p>'}
+      ${recItems || '<p style="font-size:13px;color:var(--text-dim)">Sem recomendações.</p>'}
     </div>
 
     <div>
-      <div class="result-card-title" style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px">Respostas (${rec.answers.length} perguntas)</div>
+      <div class="result-card-title" style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px">Respostas (${(rec.answers||[]).length} perguntas)</div>
       <div class="answers-grid">${ansChips}</div>
     </div>
   `;
@@ -1576,24 +2545,45 @@ function closeModal(e) {
    TABS
 ══════════════════════════════════════════════════ */
 function showTab(tab) {
-  document.getElementById('screen-form').style.display    = tab === 'form'    ? 'block' : 'none';
-  document.getElementById('screen-history').style.display = tab === 'history' ? 'block' : 'none';
-  document.getElementById('tab-form').classList.toggle('active',    tab === 'form');
-  document.getElementById('tab-history').classList.toggle('active', tab === 'history');
+  // Controle de acesso
+  if (tab === 'form' && _authRole === 'client') return; // cliente usa _startQuiz
+  if ((tab === 'dashboard' || tab === 'audit') && _authRole !== 'admin' && _authRole !== 'view') return;
+  if (tab === 'history' && _authRole !== 'admin' && _authRole !== 'view') return;
 
+  // 1. Esconder tudo primeiro
+  hideAllScreens();
+
+  // 2. Mostrar apenas a tela solicitada
+  const target = document.getElementById('screen-' + tab);
+  if (target) target.style.display = 'block';
+
+  // 3. Para a aba form, mostrar form-wrap (estado FORM_VIEW)
   if (tab === 'form' && _appState === 'FORM_VIEW') {
-    // Ensure form is visible (not result) when returning to form tab
     document.getElementById('form-wrap').style.display = 'block';
-    const rs = document.getElementById('result-screen');
-    if (!rs.classList.contains('visible')) rs.style.display = 'none';
   }
-  if (tab === 'history') renderHistory();
+  if (tab === 'form' && _appState === 'RESULT_VIEW') {
+    document.getElementById('result-screen').style.display = 'block';
+    document.getElementById('result-screen').classList.add('visible');
+  }
+
+  // 4. Atualizar tab ativa
+  ['form','history','dashboard','audit'].forEach(t => {
+    const btn = document.getElementById('tab-' + t);
+    if (btn) btn.classList.toggle('active', t === tab);
+  });
+
+  // 5. Renderizar conteúdo dinâmico
+  if (tab === 'history')   renderHistory();
+  if (tab === 'dashboard') renderDashboard();
+  if (tab === 'audit')     renderAudit();
 }
 
 /* ══════════════════════════════════════════════════
    INIT
 ══════════════════════════════════════════════════ */
-buildQuestions();
+// Estado inicial limpo: tudo oculto, login overlay visível
+hideAllScreens();
+// (login-screen já começa com classe 'visible' no HTML)
 </script>
 </body>
 </html>
